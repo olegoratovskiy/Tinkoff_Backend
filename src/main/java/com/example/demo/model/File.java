@@ -1,4 +1,4 @@
-package com.example.demo.entity;
+package com.example.demo.model;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -8,7 +8,7 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "file_jn")
-public class FileEntity {
+public class File {
     @Id
     @SequenceGenerator(name = "generator", sequenceName = "file_jn_id_seq)", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "generator")
@@ -17,5 +17,5 @@ public class FileEntity {
     private String fileUrl;
     @ManyToOne
     @JoinColumn(name = "post_id")
-    private PostEntity postId;
+    private Post postId;
 }
