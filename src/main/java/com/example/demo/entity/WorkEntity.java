@@ -3,11 +3,13 @@ package com.example.demo.entity;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 
 import java.util.List;
 
 @Getter
+@Setter
 @Entity
 @Table(name = "work_ref")
 public class WorkEntity {

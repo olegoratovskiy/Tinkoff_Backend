@@ -13,7 +13,6 @@
             <column name="id" type="serial" autoIncrement="true">
                 <constraints primaryKey="true"/>
             </column>
-            <column name="title" type="varchar(255)" defaultValue="null"/>
             <column name="post_id" type="bigint" defaultValue="null">
                 <constraints foreignKeyName="fk_post_ref_id" references="post_ref(id)"/>
             </column>

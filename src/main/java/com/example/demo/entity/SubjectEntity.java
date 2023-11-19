@@ -3,11 +3,13 @@ package com.example.demo.entity;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 
 import java.util.List;
 
 @Getter
+@Setter
 @Entity
 @Table(name = "subject_ref")
 public class SubjectEntity {
@@ -19,7 +21,7 @@ public class SubjectEntity {
     private String name;
     @ManyToOne
     @JoinColumn(name = "education_year_id")
-    private YearEntity courseId;
+    private EducationYearEntity educationYearId;
 
     @OneToMany(mappedBy = "subjectId", cascade = {CascadeType.PERSIST, CascadeType.MERGE},
             fetch = FetchType.LAZY)

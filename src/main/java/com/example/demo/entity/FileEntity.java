@@ -2,8 +2,10 @@ package com.example.demo.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
+@Setter
 @Entity
 @Table(name = "file_jn")
 public class FileEntity {
@@ -11,8 +13,8 @@ public class FileEntity {
     @SequenceGenerator(name = "generator", sequenceName = "file_jn_id_seq)", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "generator")
     private Long id;
-    @Column(name = "title")
-    private String title;
+    @Column(name = "file_url")
+    private String fileUrl;
     @ManyToOne
     @JoinColumn(name = "post_id")
     private PostEntity postId;
