@@ -4,22 +4,18 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
-
 @Getter
 @Setter
 @Entity
-@Table(name = "comment_jn")
-public class CommentEntity {
+@Table(name = "file_jn")
+public class FileEntity {
     @Id
-    @SequenceGenerator(name = "generator", sequenceName = "comment_jn_id_seq", allocationSize = 1)
+    @SequenceGenerator(name = "generator", sequenceName = "file_jn_id_seq)", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "generator")
     private Long id;
-    @Column(name = "content")
-    private String content;
+    @Column(name = "file_url")
+    private String fileUrl;
     @ManyToOne
     @JoinColumn(name = "post_id")
     private PostEntity postId;
-    @Column(name = "created_at")
-    private LocalDateTime createdAt;
 }

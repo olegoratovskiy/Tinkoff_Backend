@@ -1,0 +1,40 @@
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <changeSet id="2023-10-29-v1-create-education-year" author="Sergey Andreychikov">
+        <preConditions>
+            <not>
+                <tableExists tableName="education_year"/>
+            </not>
+        </preConditions>
+        <createTable tableName="education_year">
+            <column name="id" type="serial" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" type="varchar(255)" defaultValue="null"/>
+        </createTable>
+        <sql>
+            alter table education_year
+                add constraint name_length_check check ( length(name) > 0 );
+        </sql>
+    </changeSet>
+    <changeSet id="2023-11-19-insert-data-into-education-year-ref" author="Sergey Andreychikov">
+        <sql>
+            insert into education_year (name)
+            VALUES ('1 курс');
+            insert into education_year (name)
+            VALUES ('2 курс');
+            insert into education_year (name)
+            VALUES ('3 курс');
+            insert into education_year (name)
+            VALUES ('4 курс');
+            insert into education_year (name)
+            VALUES ('5 курс');
+            insert into education_year (name)
+            VALUES ('6 курс');
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>
