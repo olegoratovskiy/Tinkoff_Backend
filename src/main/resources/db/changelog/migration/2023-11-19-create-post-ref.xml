@@ -1,0 +1,27 @@
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <changeSet id="2023-10-29-v1-create-post-ref" author="Sergey Andreychikov">
+        <preConditions>
+            <not>
+                <tableExists tableName="post_ref"/>
+            </not>
+        </preConditions>
+        <createTable tableName="post_ref">
+            <column name="id" type="serial" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="title" type="varchar(255)" defaultValue="null"/>
+            <column name="work_id" type="bigint" defaultValue="null">
+                <constraints foreignKeyName="fk_work_ref_id" references="work_ref(id)"/>
+            </column>
+            <column name="description" type="text" defaultValue="null"/>
+        </createTable>
+        <sql>
+            alter table post_ref
+                add constraint name_length_check check ( length(title) > 0 );
+        </sql>
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,12 @@
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <include file="db/changelog/migration/2023-11-19-create-education-year-table.xml"/>
+    <include file="db/changelog/migration/2023-11-19-create-subject-ref.xml"/>
+    <include file="db/changelog/migration/2023-11-19-create-work-ref.xml"/>
+    <include file="db/changelog/migration/2023-11-19-create-post-ref.xml"/>
+    <include file="db/changelog/migration/2023-11-19-create_file-jn.xml"/>
+    <include file="db/changelog/migration/2023-11-19-create-comment-jn.xml"/>
+</databaseChangeLog>
