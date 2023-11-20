@@ -12,7 +12,7 @@ import java.util.List;
 @Setter
 @Entity
 @Table(name = "post_ref")
-public class PostEntity {
+public class Post {
     @Id
     @SequenceGenerator(name = "generator", sequenceName = "post_ref_id_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "generator")
@@ -21,7 +21,7 @@ public class PostEntity {
     private String title;
     @ManyToOne
     @JoinColumn(name = "work_id")
-    private WorkEntity workId;
+    private Work workId;
     @Column(name = "description")
     private String description;
 
@@ -29,11 +29,11 @@ public class PostEntity {
             fetch = FetchType.LAZY)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    private List<CommentEntity> comments;
+    private List<Comment> comments;
 
     @OneToMany(mappedBy = "postId", cascade = {CascadeType.PERSIST, CascadeType.MERGE},
             fetch = FetchType.LAZY)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    private List<FileEntity> files;
+    private List<File> files;
 }

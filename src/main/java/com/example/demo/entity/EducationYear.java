@@ -12,7 +12,7 @@ import java.util.List;
 @Setter
 @Entity
 @Table(name = "education_year")
-public class EducationYearEntity {
+public class EducationYear {
     @Id
     @SequenceGenerator(name = "generator", sequenceName = "education_year_id_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "generator")
@@ -23,5 +23,5 @@ public class EducationYearEntity {
             fetch = FetchType.LAZY)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    private List<SubjectEntity> subjects;
+    private List<Subject> subjects;
 }

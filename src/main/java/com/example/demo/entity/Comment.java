@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @Setter
 @Entity
 @Table(name = "comment_jn")
-public class CommentEntity {
+public class Comment {
     @Id
     @SequenceGenerator(name = "generator", sequenceName = "comment_jn_id_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "generator")
@@ -19,7 +19,7 @@ public class CommentEntity {
     private String content;
     @ManyToOne
     @JoinColumn(name = "post_id")
-    private PostEntity postId;
+    private Post postId;
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 }
