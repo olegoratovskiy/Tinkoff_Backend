@@ -5,15 +5,15 @@ import com.example.demo.dto.request.SubjectResponseDto;
 import com.example.demo.mapper.SubjectMapper;
 import com.example.demo.service.SubjectService;
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/subjects")
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class SubjectController {
-    private final SubjectService service;
-    private final SubjectMapper subjectMapper;
+    private SubjectService service;
+    private SubjectMapper subjectMapper;
 
     @PostMapping("/create")
     public SubjectResponseDto createSubject(@RequestBody @Valid SubjectRequestDto subjectDto) {
@@ -26,7 +26,7 @@ public class SubjectController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteById(@PathVariable @Valid Long id){
+    public void deleteById(@PathVariable @Valid Long id) {
         service.deleteSubject(id);
     }
 }

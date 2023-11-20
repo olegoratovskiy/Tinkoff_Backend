@@ -22,22 +22,22 @@ public interface SubjectMapper {
 
 
     @Named("setWorks")
-    static List<Work> setWorks(List<Long> carsId) {
-        if (carsId != null) {
-            return carsId.stream()
+    static List<Work> setWorks(List<Long> worksId) {
+        if (worksId != null) {
+            return worksId.stream()
                     .map(id -> {
-                        Work car = new Work();
-                        car.setId(id);
-                        return car;
+                        Work work = new Work();
+                        work.setId(id);
+                        return work;
                     }).toList();
         }
         return new ArrayList<>();
     }
 
     @Named("setWorksId")
-    static List<Long> setWorksId(List<Work> cars) {
-        if (cars != null) {
-            return cars.stream()
+    static List<Long> setWorksId(List<Work> works) {
+        if (works != null) {
+            return works.stream()
                     .map(Work::getId)
                     .toList();
         }
