@@ -1,4 +1,4 @@
-package com.example.demo.model;
+package com.example.demo.entity;
 
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
@@ -11,17 +11,22 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-@Table(name = "education_year")
-public class EducationYear {
+@Table(name = "subject_ref")
+public class Subject {
     @Id
-    @SequenceGenerator(name = "generator", sequenceName = "education_year_id_seq", allocationSize = 1)
+    @SequenceGenerator(name = "generator", sequenceName = "subject_ref_id_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "generator")
     private Long id;
     @Column(name = "name")
     private String name;
-    @OneToMany(mappedBy = "educationYearId", cascade = {CascadeType.PERSIST, CascadeType.MERGE},
+    @ManyToOne
+    @JoinColumn(name = "education_year_id")
+    private EducationYear educationYearId;
+
+    @OneToMany(mappedBy = "subjectId", cascade = {CascadeType.PERSIST, CascadeType.MERGE,
+    CascadeType.REMOVE},
             fetch = FetchType.LAZY)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
-    private List<Subject> subjects;
+    private List<Work> works;
 }

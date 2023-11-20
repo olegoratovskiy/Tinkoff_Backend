@@ -1,4 +1,4 @@
-package com.example.demo.model;
+package com.example.demo.entity;
 
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
@@ -23,7 +23,8 @@ public class Work {
     @JoinColumn(name = "subject_id")
     private Subject subjectId;
 
-    @OneToMany(mappedBy = "workId", cascade = {CascadeType.PERSIST, CascadeType.MERGE},
+    @OneToMany(mappedBy = "workId", cascade = {CascadeType.PERSIST, CascadeType.MERGE,
+            CascadeType.REMOVE},
             fetch = FetchType.LAZY)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude

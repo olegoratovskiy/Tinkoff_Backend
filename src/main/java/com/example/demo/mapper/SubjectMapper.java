@@ -1,9 +1,9 @@
 package com.example.demo.mapper;
 
 import com.example.demo.dto.request.SubjectRequestDto;
-import com.example.demo.dto.request.SubjectResponseDto;
-import com.example.demo.model.Subject;
-import com.example.demo.model.Work;
+import com.example.demo.dto.response.SubjectResponseDto;
+import com.example.demo.entity.Subject;
+import com.example.demo.entity.Work;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
