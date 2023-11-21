@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("/subjects")
 @AllArgsConstructor
 public class SubjectController {
@@ -23,7 +24,7 @@ public class SubjectController {
     public SubjectResponseDto createSubject(@RequestBody @Valid SubjectRequestDto subjectDto) {
         return subjectMapper.fromModelToDto(
                 service.createSubject
-                        (subjectMapper.fromDtoToModel(subjectDto),subjectDto.getYearId()));
+                        (subjectMapper.fromDtoToModel(subjectDto), subjectDto.getYearId()));
     }
 
     @GetMapping("/find/{id}")
