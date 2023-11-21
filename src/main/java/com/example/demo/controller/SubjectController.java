@@ -41,6 +41,16 @@ public class SubjectController {
         return list;
     }
 
+    @GetMapping("/find_all_by_year_id/{id}")
+    public List<SubjectResponseDto> getAllSubject(@PathVariable @Valid Long id) {
+        List<SubjectResponseDto> list = new ArrayList<>();
+        List<Subject> subjects = service.getAllByYearId(id);
+        for (Subject subject : subjects) {
+            list.add(subjectMapper.fromModelToDto(subject));
+        }
+        return list;
+    }
+
     @DeleteMapping("/{id}")
     public void deleteById(@PathVariable @Valid Long id) {
         service.deleteSubject(id);

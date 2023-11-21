@@ -34,6 +34,16 @@ public class WorkController {
         return list;
     }
 
+    @GetMapping("find_all_by_sub_id/{id}")
+    public List<WorkResponseDto> getAllWorks(@PathVariable @Valid Long id) {
+        List<WorkResponseDto> list = new ArrayList<>();
+        List<Work> worksList = workService.getAllWorksBySubId(id);
+        for (Work work : worksList) {
+            list.add(workMapper.fromModelToDto(work));
+        }
+        return list;
+    }
+
 
 
     @PostMapping("create")

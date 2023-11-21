@@ -40,6 +40,16 @@ public class PostController {
                 (postMapper.fromDtoToModel(postRequestDto),postRequestDto.getIdWork()));
     }
 
+    @GetMapping("/find_all_by_work_id/{id}")
+    public List<PostResponseDto> getPosts(@PathVariable @Valid Long id) {
+        List<PostResponseDto> list = new ArrayList<>();
+        List<Post> postList = postService.getAllPostsByWorkId(id);
+        for (Post post : postList) {
+            list.add(postMapper.fromModelToDto(post));
+        }
+        return list;
+    }
+
     @DeleteMapping("/delete{id}")
     public void deletePost(@PathVariable @Valid Long id){
         postService.deletePost(id);

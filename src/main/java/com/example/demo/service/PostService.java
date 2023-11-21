@@ -22,6 +22,10 @@ public class PostService {
         return postRepository.findAll();
     }
 
+    public List<Post> getAllPostsByWorkId(Long id){
+        return postRepository.findAllByWorkId(workService.getWorkById(id));
+    }
+
     public Post createPost(Post post,Long id){
         post.setWorkId(workService.getWorkById(id));
         return postRepository.save(post);
