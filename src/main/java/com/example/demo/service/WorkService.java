@@ -25,6 +25,10 @@ public class WorkService {
     public List<Work> getAllWork(){
         return workRepository.findAll();
     }
+
+    public List<Work> getAllWorksBySubId(Long subId){
+        return workRepository.findAllBySubjectId(subjectService.getSubject(subId));
+    }
     @Transactional
     public void deleteWork(Long id){
         workRepository.deleteById(id);

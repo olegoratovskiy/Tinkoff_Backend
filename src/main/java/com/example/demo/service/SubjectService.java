@@ -27,6 +27,10 @@ public class SubjectService {
         return subjectRepository.findAll();
     }
 
+    public List<Subject> getAllByYearId(Long yearId){
+        return subjectRepository.findAllByEducationYearId(educationYearService.getEducationYear(yearId));
+    }
+
     @Transactional
     public void deleteSubject(Long id){
         subjectRepository.deleteById(id);
