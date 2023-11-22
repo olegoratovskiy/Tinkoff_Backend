@@ -6,6 +6,7 @@
     <include file="db/changelog/migration/2023-11-19-create-education-year-table.xml"/>
     <include file="db/changelog/migration/2023-11-19-create-subject-ref.xml"/>
     <include file="db/changelog/migration/2023-11-19-create-work-ref.xml"/>
+    <include file="db/changelog/migration/2023-11-22-create-user.xml"/>
     <include file="db/changelog/migration/2023-11-19-create-post-ref.xml"/>
     <include file="db/changelog/migration/2023-11-19-create_file-jn.xml"/>
     <include file="db/changelog/migration/2023-11-19-create-comment-jn.xml"/>
