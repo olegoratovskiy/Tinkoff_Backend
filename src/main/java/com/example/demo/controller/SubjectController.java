@@ -7,13 +7,15 @@ import com.example.demo.mapper.SubjectMapper;
 import com.example.demo.service.SubjectService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@RestController
 @CrossOrigin(origins = "*")
+@RestController
 @RequestMapping("/subjects")
 @AllArgsConstructor
 public class SubjectController {
@@ -21,10 +23,15 @@ public class SubjectController {
     private SubjectMapper subjectMapper;
 
     @PostMapping("/create")
-    public SubjectResponseDto createSubject(@RequestBody @Valid SubjectRequestDto subjectDto) {
-        return subjectMapper.fromModelToDto(
-                service.createSubject
-                        (subjectMapper.fromDtoToModel(subjectDto), subjectDto.getYearId()));
+    public ResponseEntity<SubjectResponseDto> createSubject(@RequestBody @Valid SubjectRequestDto subjectDto) {
+        Subject model = subjectMapper.fromDtoToModel(subjectDto);
+        Long yearId = subjectDto.getYearId();
+
+        if (service.subjectExists(model, yearId)) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(subjectMapper.fromModelToDto(service.createSubject(model, yearId)));
     }
 
     @GetMapping("/find/{id}")

@@ -33,4 +33,8 @@ public class WorkService {
     public void deleteWork(Long id){
         workRepository.deleteById(id);
     }
+
+    public boolean workExists(Work model, Long subjectId){
+        return workRepository.existsWorkByTypeOfWorkAndSubjectId(model.getTypeOfWork(), subjectService.getSubject(subjectId));
+    }
  }

@@ -14,24 +14,30 @@ public class PostService {
     private PostRepository postRepository;
     private WorkService workService;
 
-    public Post getPost(Long id){
+    public Post getPost(Long id) {
         return postRepository.findById(id).orElseThrow(RuntimeException::new);
     }
 
-    public List<Post> getAllPosts(){
+    public List<Post> getAllPosts() {
         return postRepository.findAll();
     }
 
-    public List<Post> getAllPostsByWorkId(Long id){
+    public List<Post> getAllPostsByWorkId(Long id) {
         return postRepository.findAllByWorkId(workService.getWorkById(id));
     }
 
-    public Post createPost(Post post,Long id){
+    public Post createPost(Post post, Long id) {
         post.setWorkId(workService.getWorkById(id));
         return postRepository.save(post);
     }
+
     @Transactional
-    public void deletePost(Long id){
+    public void deletePost(Long id) {
         postRepository.deleteById(id);
     }
+
+    public boolean postExists(Post model, Long workId) {
+        return postRepository.existsPostByTitleAndDescriptionAndWorkId(model.getTitle(), model.getDescription(), workService.getWorkById(workId));
+    }
+
 }

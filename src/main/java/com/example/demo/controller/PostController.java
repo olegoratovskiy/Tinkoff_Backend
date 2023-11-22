@@ -7,13 +7,15 @@ import com.example.demo.mapper.PostMapper;
 import com.example.demo.service.PostService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@RestController
 @CrossOrigin(origins = "*")
+@RestController
 @RequestMapping("/posts")
 @AllArgsConstructor
 public class PostController {
@@ -36,9 +38,16 @@ public class PostController {
     }
 
     @PostMapping("/create")
-    public PostResponseDto createPost(@RequestBody @Valid PostRequestDto postRequestDto){
-        return postMapper.fromModelToDto(postService.createPost
-                (postMapper.fromDtoToModel(postRequestDto),postRequestDto.getIdWork()));
+    public ResponseEntity<PostResponseDto> createPost(@RequestBody @Valid PostRequestDto postRequestDto){
+        Post model = postMapper.fromDtoToModel(postRequestDto);
+        Long workId = postRequestDto.getIdWork();
+
+        if (postService.postExists(model, workId)) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(postMapper.fromModelToDto(postService.createPost
+                (model,workId)));
     }
 
     @GetMapping("/find_all_by_work_id/{id}")

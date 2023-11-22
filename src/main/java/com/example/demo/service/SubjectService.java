@@ -14,6 +14,11 @@ public class SubjectService {
     private final SubjectRepository subjectRepository;
     private final EducationYearService educationYearService;
 
+    public boolean subjectExists(Subject subject,Long yearId){
+        return subjectRepository.existsSubjectByNameAndEducationYearId(subject.getName(),
+                educationYearService.getEducationYear(yearId));
+    }
+
     public Subject createSubject(Subject subject,Long id){
         subject.setEducationYearId(educationYearService.getEducationYear(id));
         return subjectRepository.save(subject);

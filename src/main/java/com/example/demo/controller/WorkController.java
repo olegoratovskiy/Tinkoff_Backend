@@ -7,13 +7,15 @@ import com.example.demo.mapper.WorkMapper;
 import com.example.demo.service.WorkService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@RestController
 @CrossOrigin(origins = "*")
+@RestController
 @AllArgsConstructor
 @RequestMapping("/works")
 public class WorkController {
@@ -46,16 +48,21 @@ public class WorkController {
     }
 
 
-
     @PostMapping("create")
-    public WorkResponseDto createWork(@RequestBody @Valid WorkRequestDto workRequestDto) {
-        return workMapper.fromModelToDto(workService.
-                createWork(workMapper.
-                        fromDtoToModel(workRequestDto), workRequestDto.getIdSubject()));
+    public ResponseEntity<WorkResponseDto> createWork(@RequestBody @Valid WorkRequestDto workRequestDto) {
+        Work model = workMapper.fromDtoToModel(workRequestDto);
+        Long subjectId = workRequestDto.getIdSubject();
+
+        if (workService.workExists(model, subjectId)) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(workMapper.fromModelToDto(workService.
+                createWork(model, subjectId)));
     }
 
     @DeleteMapping("delete/{id}")
-    public void deleteWorkById(@PathVariable @Valid Long id){
+    public void deleteWorkById(@PathVariable @Valid Long id) {
         workService.deleteWork(id);
     }
 }
