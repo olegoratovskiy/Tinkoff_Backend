@@ -3,12 +3,11 @@ package com.example.demo.controller;
 import com.example.demo.dto.request.WorkRequestDto;
 import com.example.demo.dto.response.WorkResponseDto;
 import com.example.demo.entity.Work;
+import com.example.demo.exceptions.CreatingExistingEntityException;
 import com.example.demo.mapper.WorkMapper;
 import com.example.demo.service.WorkService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -49,16 +48,15 @@ public class WorkController {
 
 
     @PostMapping("create")
-    public ResponseEntity<WorkResponseDto> createWork(@RequestBody @Valid WorkRequestDto workRequestDto) {
+    public WorkResponseDto createWork(@RequestBody @Valid WorkRequestDto workRequestDto) {
         Work model = workMapper.fromDtoToModel(workRequestDto);
         Long subjectId = workRequestDto.getIdSubject();
 
         if (workService.workExists(model, subjectId)) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+            throw new CreatingExistingEntityException(String.format("Work with Type<%s> and Subject <%s> already exists", model.getTypeOfWork(), model.getSubjectId()));
         }
 
-        return ResponseEntity.status(HttpStatus.OK).body(workMapper.fromModelToDto(workService.
-                createWork(model, subjectId)));
+        return workMapper.fromModelToDto(workService.createWork(model, subjectId));
     }
 
     @DeleteMapping("delete/{id}")

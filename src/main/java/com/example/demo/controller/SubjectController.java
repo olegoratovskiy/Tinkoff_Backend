@@ -3,12 +3,11 @@ package com.example.demo.controller;
 import com.example.demo.dto.request.SubjectRequestDto;
 import com.example.demo.dto.response.SubjectResponseDto;
 import com.example.demo.entity.Subject;
+import com.example.demo.exceptions.CreatingExistingEntityException;
 import com.example.demo.mapper.SubjectMapper;
 import com.example.demo.service.SubjectService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -23,15 +22,15 @@ public class SubjectController {
     private SubjectMapper subjectMapper;
 
     @PostMapping("/create")
-    public ResponseEntity<SubjectResponseDto> createSubject(@RequestBody @Valid SubjectRequestDto subjectDto) {
+    public SubjectResponseDto createSubject(@RequestBody @Valid SubjectRequestDto subjectDto) {
         Subject model = subjectMapper.fromDtoToModel(subjectDto);
         Long yearId = subjectDto.getYearId();
 
         if (service.subjectExists(model, yearId)) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+            throw new CreatingExistingEntityException(String.format("Subject with Name<%s> and Year <%s> already exists", model.getName(), model.getEducationYearId()));
         }
 
-        return ResponseEntity.status(HttpStatus.OK).body(subjectMapper.fromModelToDto(service.createSubject(model, yearId)));
+        return subjectMapper.fromModelToDto(service.createSubject(model, yearId));
     }
 
     @GetMapping("/find/{id}")

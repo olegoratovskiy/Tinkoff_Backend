@@ -3,12 +3,11 @@ package com.example.demo.controller;
 import com.example.demo.dto.request.PostRequestDto;
 import com.example.demo.dto.response.PostResponseDto;
 import com.example.demo.entity.Post;
+import com.example.demo.exceptions.CreatingExistingEntityException;
 import com.example.demo.mapper.PostMapper;
 import com.example.demo.service.PostService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -38,16 +37,15 @@ public class PostController {
     }
 
     @PostMapping("/create")
-    public ResponseEntity<PostResponseDto> createPost(@RequestBody @Valid PostRequestDto postRequestDto){
+    public PostResponseDto createPost(@RequestBody @Valid PostRequestDto postRequestDto){
         Post model = postMapper.fromDtoToModel(postRequestDto);
         Long workId = postRequestDto.getIdWork();
 
         if (postService.postExists(model, workId)) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+            throw new CreatingExistingEntityException(String.format("Post with Title<%s> and Description <%s> and Work <%s> already exists", model.getTitle(), model.getDescription(), workId));
         }
 
-        return ResponseEntity.status(HttpStatus.OK).body(postMapper.fromModelToDto(postService.createPost
-                (model,workId)));
+        return postMapper.fromModelToDto(postService.createPost(model,workId));
     }
 
     @GetMapping("/find_all_by_work_id/{id}")
