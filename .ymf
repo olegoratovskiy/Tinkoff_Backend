@@ -1,2 +1,0 @@
-- name: Pull Request StyleCheck
-  uses: maximbircu/pull-request-checkstyle@v1.0.0
