@@ -20,6 +20,11 @@ public class Comment {
     @ManyToOne
     @JoinColumn(name = "post_id")
     private Post postId;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User author;
+
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 }

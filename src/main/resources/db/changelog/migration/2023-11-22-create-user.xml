@@ -3,20 +3,23 @@
         xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
-    <changeSet id="2023-10-29-v1-create-file-jn" author="Sergey Andreychikov">
+    <changeSet id="2023-11-22-v1-create-user-jn" author="Sergey Andreychikov">
         <preConditions>
             <not>
-                <tableExists tableName="file_jn"/>
+                <tableExists tableName="user_jn"/>
             </not>
         </preConditions>
-        <createTable tableName="file_jn">
+        <createTable tableName="user_jn">
             <column name="id" type="serial" autoIncrement="true">
                 <constraints primaryKey="true"/>
             </column>
-            <column name="post_id" type="bigint" defaultValue="null">
-                <constraints foreignKeyName="fk_post_file_ref_id" references="post_ref(id)"/>
-            </column>
-            <column name="file_url" type="varchar(255)" defaultValue="null"/>
+            <column name="name" type="text" defaultValue="null"/>
+            <column name="role" type="varchar(255)" defaultValue="null"/>
+            <column name="password" type="varchar(255)" defaultValue="null"/>
         </createTable>
+        <sql>
+            alter table user_jn
+                add constraint name_length_check check ( length(name) > 0 );
+        </sql>
     </changeSet>
 </databaseChangeLog>

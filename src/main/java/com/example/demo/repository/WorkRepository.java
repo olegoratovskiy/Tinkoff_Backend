@@ -8,4 +8,6 @@ import java.util.List;
 
 public interface WorkRepository extends JpaRepository<Work, Long> {
     List<Work> findAllBySubjectId(Subject subjectId);
+
+    boolean existsWorkByTypeOfWorkAndSubjectId(String typeOfWork, Subject subjectId);
 }

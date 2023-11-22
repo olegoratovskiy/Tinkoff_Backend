@@ -1,6 +1,8 @@
 package com.example.demo.service;
 
+import com.example.demo.entity.Subject;
 import com.example.demo.entity.Work;
+import com.example.demo.exceptions.CreatingExistingEntityException;
 import com.example.demo.repository.WorkRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -13,8 +15,16 @@ import java.util.List;
 public class WorkService {
     private final WorkRepository workRepository;
     private final SubjectService subjectService;
-    public Work createWork(Work work, Long id) {
-        work.setSubjectId(subjectService.getSubject(id));
+
+    public Work createWork(Work work, Long subjectId) {
+        if (workExists(work, subjectId)) {
+            String type = work.getTypeOfWork();
+            String message = String.format("Work with Type<%s> and Subject <%s> already exists", type, subjectId);
+
+            throw new CreatingExistingEntityException(message);
+        }
+
+        work.setSubjectId(subjectService.getSubject(subjectId));
         return workRepository.save(work);
     }
 
@@ -29,8 +39,16 @@ public class WorkService {
     public List<Work> getAllWorksBySubId(Long subId) {
         return workRepository.findAllBySubjectId(subjectService.getSubject(subId));
     }
+
     @Transactional
     public void deleteWork(Long id) {
         workRepository.deleteById(id);
+    }
+
+    private boolean workExists(Work work, Long subjectId) {
+        String type = work.getTypeOfWork();
+        Subject subject = subjectService.getSubject(subjectId);
+
+        return workRepository.existsWorkByTypeOfWorkAndSubjectId(type, subject);
     }
 }

@@ -25,6 +25,10 @@ public class Post {
     @Column(name = "description")
     private String description;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User author;
+
     @OneToMany(mappedBy = "postId", cascade = {CascadeType.PERSIST, CascadeType.MERGE},
             fetch = FetchType.LAZY)
     @ToString.Exclude

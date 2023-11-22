@@ -17,6 +17,9 @@
             <column name="work_id" type="bigint" defaultValue="null">
                 <constraints foreignKeyName="fk_work_ref_id" references="work_ref(id)"/>
             </column>
+            <column name="user_id" type="bigint" defaultValue="null">
+                <constraints foreignKeyName="fk_user_post_jn_id" references="user_jn(id)"/>
+            </column>
             <column name="description" type="text" defaultValue="null"/>
         </createTable>
         <sql>
