@@ -11,11 +11,11 @@ import java.util.List;
 @Setter
 public class PostRequestDto {
     @NotNull(message = "пост не может быть без заголовка")
-    @Size(max = 30,message = "превышен лимит заголовка")
-    @Size(min = 5,message = "слишком маленький заголовок")
+    @Size(max = 30, message = "превышен лимит заголовка")
+    @Size(min = 5, message = "слишком маленький заголовок")
     private String title;
     @NotNull(message = "пост не может быть без описания")
-    @Size(max = 250,message = "превышен лимит описания")
+    @Size(max = 250, message = "превышен лимит описания")
     private String description;
     private Long idWork;
     private List<Long> commentsId;
