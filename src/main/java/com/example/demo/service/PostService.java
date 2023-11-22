@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.entity.Post;
+import com.example.demo.entity.Work;
 import com.example.demo.exceptions.CreatingExistingEntityException;
 import com.example.demo.repository.PostRepository;
 import lombok.AllArgsConstructor;
@@ -30,7 +31,13 @@ public class PostService {
     public Post createPost(Post post, Long workId) {
 
         if (this.postExists(post, workId)){
-            throw new CreatingExistingEntityException(String.format("Post with Title<%s> and Description <%s> and Work <%s> already exists", post.getTitle(), post.getDescription(), workId));
+            String postTitle = post.getTitle();
+            String postDescription = post.getDescription();
+
+            String message = String.format("Post with Title<%s> and Description <%s> and Work <%s> already exists",
+                    postTitle, postDescription, workId);
+
+            throw new CreatingExistingEntityException(message);
         }
 
         post.setWorkId(workService.getWorkById(workId));
@@ -42,8 +49,12 @@ public class PostService {
         postRepository.deleteById(id);
     }
 
-    public boolean postExists(Post model, Long workId) {
-        return postRepository.existsPostByTitleAndDescriptionAndWorkId(model.getTitle(), model.getDescription(), workService.getWorkById(workId));
+    public boolean postExists(Post post, Long workId) {
+        String postTitle = post.getTitle();
+        String postDescription = post.getDescription();
+        Work work = workService.getWorkById(workId);
+
+        return postRepository.existsPostByTitleAndDescriptionAndWorkId(postTitle, postDescription, work);
     }
 
 }

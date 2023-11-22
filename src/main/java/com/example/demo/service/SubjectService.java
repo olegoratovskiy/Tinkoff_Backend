@@ -22,7 +22,10 @@ public class SubjectService {
 
     public Subject createSubject(Subject subject, Long yearId) {
         if (this.subjectExists(subject, yearId)) {
-            throw new CreatingExistingEntityException(String.format("Subject with Name<%s> and Year <%s> already exists", subject.getName(), yearId));
+            String name = subject.getName();
+            String message = String.format("Subject with Name<%s> and Year <%s> already exists", name, yearId);
+
+            throw new CreatingExistingEntityException(message);
         }
 
         subject.setEducationYearId(educationYearService.getEducationYear(yearId));

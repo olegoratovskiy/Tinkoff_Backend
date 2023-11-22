@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.entity.Subject;
 import com.example.demo.entity.Work;
 import com.example.demo.exceptions.CreatingExistingEntityException;
 import com.example.demo.repository.WorkRepository;
@@ -17,7 +18,10 @@ public class WorkService {
 
     public Work createWork(Work work, Long subjectId) {
         if (this.workExists(work, subjectId)) {
-            throw new CreatingExistingEntityException(String.format("Work with Type<%s> and Subject <%s> already exists", work.getTypeOfWork(), subjectId));
+            String type = work.getTypeOfWork();
+            String message = String.format("Work with Type<%s> and Subject <%s> already exists", type , subjectId);
+
+            throw new CreatingExistingEntityException(message);
         }
 
         work.setSubjectId(subjectService.getSubject(subjectId));
@@ -41,7 +45,10 @@ public class WorkService {
         workRepository.deleteById(id);
     }
 
-    public boolean workExists(Work model, Long subjectId) {
-        return workRepository.existsWorkByTypeOfWorkAndSubjectId(model.getTypeOfWork(), subjectService.getSubject(subjectId));
+    public boolean workExists(Work work, Long subjectId) {
+        String type = work.getTypeOfWork();
+        Subject subject = subjectService.getSubject(subjectId);
+
+        return workRepository.existsWorkByTypeOfWorkAndSubjectId(type, subject);
     }
 }
