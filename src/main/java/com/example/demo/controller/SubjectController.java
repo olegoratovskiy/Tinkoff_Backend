@@ -3,7 +3,6 @@ package com.example.demo.controller;
 import com.example.demo.dto.request.SubjectRequestDto;
 import com.example.demo.dto.response.SubjectResponseDto;
 import com.example.demo.entity.Subject;
-import com.example.demo.exceptions.CreatingExistingEntityException;
 import com.example.demo.mapper.SubjectMapper;
 import com.example.demo.service.SubjectService;
 import jakarta.validation.Valid;
@@ -25,10 +24,6 @@ public class SubjectController {
     public SubjectResponseDto createSubject(@RequestBody @Valid SubjectRequestDto subjectDto) {
         Subject model = subjectMapper.fromDtoToModel(subjectDto);
         Long yearId = subjectDto.getYearId();
-
-        if (service.subjectExists(model, yearId)) {
-            throw new CreatingExistingEntityException(String.format("Subject with Name<%s> and Year <%s> already exists", model.getName(), model.getEducationYearId()));
-        }
 
         return subjectMapper.fromModelToDto(service.createSubject(model, yearId));
     }

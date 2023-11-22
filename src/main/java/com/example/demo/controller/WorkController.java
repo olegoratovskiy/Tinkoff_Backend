@@ -3,7 +3,6 @@ package com.example.demo.controller;
 import com.example.demo.dto.request.WorkRequestDto;
 import com.example.demo.dto.response.WorkResponseDto;
 import com.example.demo.entity.Work;
-import com.example.demo.exceptions.CreatingExistingEntityException;
 import com.example.demo.mapper.WorkMapper;
 import com.example.demo.service.WorkService;
 import jakarta.validation.Valid;
@@ -51,10 +50,6 @@ public class WorkController {
     public WorkResponseDto createWork(@RequestBody @Valid WorkRequestDto workRequestDto) {
         Work model = workMapper.fromDtoToModel(workRequestDto);
         Long subjectId = workRequestDto.getIdSubject();
-
-        if (workService.workExists(model, subjectId)) {
-            throw new CreatingExistingEntityException(String.format("Work with Type<%s> and Subject <%s> already exists", model.getTypeOfWork(), model.getSubjectId()));
-        }
 
         return workMapper.fromModelToDto(workService.createWork(model, subjectId));
     }

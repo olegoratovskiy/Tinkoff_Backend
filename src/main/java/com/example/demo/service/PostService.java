@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.entity.Post;
+import com.example.demo.exceptions.CreatingExistingEntityException;
 import com.example.demo.repository.PostRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -26,8 +27,13 @@ public class PostService {
         return postRepository.findAllByWorkId(workService.getWorkById(id));
     }
 
-    public Post createPost(Post post, Long id) {
-        post.setWorkId(workService.getWorkById(id));
+    public Post createPost(Post post, Long workId) {
+
+        if (this.postExists(post, workId)){
+            throw new CreatingExistingEntityException(String.format("Post with Title<%s> and Description <%s> and Work <%s> already exists", post.getTitle(), post.getDescription(), workId));
+        }
+
+        post.setWorkId(workService.getWorkById(workId));
         return postRepository.save(post);
     }
 
