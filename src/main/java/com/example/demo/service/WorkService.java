@@ -17,9 +17,9 @@ public class WorkService {
     private final SubjectService subjectService;
 
     public Work createWork(Work work, Long subjectId) {
-        if (this.workExists(work, subjectId)) {
+        if (workExists(work, subjectId)) {
             String type = work.getTypeOfWork();
-            String message = String.format("Work with Type<%s> and Subject <%s> already exists", type , subjectId);
+            String message = String.format("Work with Type<%s> and Subject <%s> already exists", type, subjectId);
 
             throw new CreatingExistingEntityException(message);
         }
@@ -45,7 +45,7 @@ public class WorkService {
         workRepository.deleteById(id);
     }
 
-    public boolean workExists(Work work, Long subjectId) {
+    private boolean workExists(Work work, Long subjectId) {
         String type = work.getTypeOfWork();
         Subject subject = subjectService.getSubject(subjectId);
 

@@ -15,13 +15,13 @@ public class SubjectService {
     private final SubjectRepository subjectRepository;
     private final EducationYearService educationYearService;
 
-    public boolean subjectExists(Subject subject, Long yearId) {
+    private boolean subjectExists(Subject subject, Long yearId) {
         return subjectRepository.existsSubjectByNameAndEducationYearId(subject.getName(),
                 educationYearService.getEducationYear(yearId));
     }
 
     public Subject createSubject(Subject subject, Long yearId) {
-        if (this.subjectExists(subject, yearId)) {
+        if (subjectExists(subject, yearId)) {
             String name = subject.getName();
             String message = String.format("Subject with Name<%s> and Year <%s> already exists", name, yearId);
 

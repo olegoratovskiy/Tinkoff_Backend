@@ -30,7 +30,7 @@ public class PostService {
 
     public Post createPost(Post post, Long workId) {
 
-        if (this.postExists(post, workId)){
+        if (postExists(post, workId)) {
             String postTitle = post.getTitle();
             String postDescription = post.getDescription();
 
@@ -49,7 +49,7 @@ public class PostService {
         postRepository.deleteById(id);
     }
 
-    public boolean postExists(Post post, Long workId) {
+    private boolean postExists(Post post, Long workId) {
         String postTitle = post.getTitle();
         String postDescription = post.getDescription();
         Work work = workService.getWorkById(workId);
