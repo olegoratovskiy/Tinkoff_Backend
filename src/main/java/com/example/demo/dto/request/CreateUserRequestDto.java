@@ -9,8 +9,8 @@ import lombok.Setter;
 @Setter
 public class CreateUserRequestDto {
     @NotNull(message = "имя не может быть пустым")
-    @Size(max = 20,message = "слишком большое имя")
-    @Size(min = 5,message = "слишком короткое имя")
+    @Size(max = 20, message = "слишком большое имя")
+    @Size(min = 5, message = "слишком короткое имя")
     private String name;
     private String password;
 }
