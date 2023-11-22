@@ -23,8 +23,11 @@ public class Subject {
     @JoinColumn(name = "education_year_id")
     private EducationYear educationYearId;
 
-    @OneToMany(mappedBy = "subjectId", cascade = {CascadeType.PERSIST, CascadeType.MERGE,
-    CascadeType.REMOVE},
+    @OneToMany(
+            mappedBy = "subjectId",
+            cascade = {
+                    CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE
+            },
             fetch = FetchType.LAZY)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude

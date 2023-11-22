@@ -21,7 +21,7 @@ public class PostController {
     private PostService postService;
 
     @GetMapping("/find/{id}")
-    public PostResponseDto getPost(@PathVariable @Valid Long id){
+    public PostResponseDto getPost(@PathVariable @Valid Long id) {
         return postMapper.fromModelToDto(postService.getPost(id));
     }
 
@@ -54,7 +54,7 @@ public class PostController {
     }
 
     @DeleteMapping("/delete{id}")
-    public void deletePost(@PathVariable @Valid Long id){
+    public void deletePost(@PathVariable @Valid Long id) {
         postService.deletePost(id);
     }
 

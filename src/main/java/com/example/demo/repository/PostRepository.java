@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface PostRepository extends JpaRepository<Post,Long> {
+public interface PostRepository extends JpaRepository<Post, Long> {
     List<Post> findAllByWorkId(Work workId);
 
     boolean existsPostByTitleAndDescriptionAndWorkId(String title, String description, Work workId);
