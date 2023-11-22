@@ -36,11 +36,11 @@ public class PostController {
     }
 
     @PostMapping("/create")
-    public PostResponseDto createPost(@RequestBody @Valid PostRequestDto postRequestDto){
+    public PostResponseDto createPost(@RequestBody @Valid PostRequestDto postRequestDto) {
         Post model = postMapper.fromDtoToModel(postRequestDto);
         Long workId = postRequestDto.getIdWork();
 
-        return postMapper.fromModelToDto(postService.createPost(model,workId));
+        return postMapper.fromModelToDto(postService.createPost(model, workId));
     }
 
     @GetMapping("/find_all_by_work_id/{id}")

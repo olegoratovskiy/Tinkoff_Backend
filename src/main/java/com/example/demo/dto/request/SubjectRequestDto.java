@@ -11,8 +11,8 @@ import java.util.List;
 @Setter
 public class SubjectRequestDto {
     @NotNull(message = "название предмета не может быть пустым")
-    @Size(max = 10,message = "превышен лимит названия")
-    @Size(min = 2,message = "слишком короткое название")
+    @Size(max = 10, message = "превышен лимит названия")
+    @Size(min = 2, message = "слишком короткое название")
     private String name;
     private Long yearId;
     private List<Long> worksId;
