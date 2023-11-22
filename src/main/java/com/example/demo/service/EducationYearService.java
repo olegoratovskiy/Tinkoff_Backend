@@ -16,7 +16,7 @@ public class EducationYearService {
         return yearRepository.findById(id).orElseThrow(RuntimeException::new);
     }
 
-    public List<EducationYear> getAllEducationYear(){
+    public List<EducationYear> getAllEducationYear() {
         return yearRepository.findAll();
     }
 }

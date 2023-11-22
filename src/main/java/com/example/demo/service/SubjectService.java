@@ -14,25 +14,25 @@ public class SubjectService {
     private final SubjectRepository subjectRepository;
     private final EducationYearService educationYearService;
 
-    public Subject createSubject(Subject subject,Long id){
+    public Subject createSubject(Subject subject, Long id) {
         subject.setEducationYearId(educationYearService.getEducationYear(id));
         return subjectRepository.save(subject);
     }
 
-    public Subject getSubject(Long id){
+    public Subject getSubject(Long id) {
         return subjectRepository.findById(id).orElseThrow(RuntimeException::new);
     }
 
-    public List<Subject> getAllSubject(){
+    public List<Subject> getAllSubject() {
         return subjectRepository.findAll();
     }
 
-    public List<Subject> getAllByYearId(Long yearId){
+    public List<Subject> getAllByYearId(Long yearId) {
         return subjectRepository.findAllByEducationYearId(educationYearService.getEducationYear(yearId));
     }
 
     @Transactional
-    public void deleteSubject(Long id){
+    public void deleteSubject(Long id) {
         subjectRepository.deleteById(id);
     }
 

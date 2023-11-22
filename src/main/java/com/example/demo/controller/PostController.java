@@ -21,7 +21,7 @@ public class PostController {
     private PostService postService;
 
     @GetMapping("/find/{id}")
-    public PostResponseDto getPost(@PathVariable @Valid Long id){
+    public PostResponseDto getPost(@PathVariable @Valid Long id) {
         return postMapper.fromModelToDto(postService.getPost(id));
     }
 
@@ -36,9 +36,9 @@ public class PostController {
     }
 
     @PostMapping("/create")
-    public PostResponseDto createPost(@RequestBody @Valid PostRequestDto postRequestDto){
-        return postMapper.fromModelToDto(postService.createPost
-                (postMapper.fromDtoToModel(postRequestDto),postRequestDto.getIdWork()));
+    public PostResponseDto createPost(@RequestBody @Valid PostRequestDto postRequestDto) {
+        var post = postMapper.fromDtoToModel(postRequestDto);
+        return postMapper.fromModelToDto(postService.createPost(post, postRequestDto.getIdWork()));
     }
 
     @GetMapping("/find_all_by_work_id/{id}")
@@ -52,7 +52,7 @@ public class PostController {
     }
 
     @DeleteMapping("/delete{id}")
-    public void deletePost(@PathVariable @Valid Long id){
+    public void deletePost(@PathVariable @Valid Long id) {
         postService.deletePost(id);
     }
 

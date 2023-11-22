@@ -22,9 +22,8 @@ public class SubjectController {
 
     @PostMapping("/create")
     public SubjectResponseDto createSubject(@RequestBody @Valid SubjectRequestDto subjectDto) {
-        return subjectMapper.fromModelToDto(
-                service.createSubject
-                        (subjectMapper.fromDtoToModel(subjectDto), subjectDto.getYearId()));
+        var subject = subjectMapper.fromDtoToModel(subjectDto);
+        return subjectMapper.fromModelToDto(service.createSubject(subject, subjectDto.getYearId()));
     }
 
     @GetMapping("/find/{id}")

@@ -13,24 +13,24 @@ import java.util.List;
 public class WorkService {
     private final WorkRepository workRepository;
     private final SubjectService subjectService;
-    public Work createWork(Work work,Long id){
+    public Work createWork(Work work, Long id) {
         work.setSubjectId(subjectService.getSubject(id));
         return workRepository.save(work);
     }
 
-    public Work getWorkById(Long id){
+    public Work getWorkById(Long id) {
         return workRepository.findById(id).orElseThrow(RuntimeException::new);
     }
 
-    public List<Work> getAllWork(){
+    public List<Work> getAllWork() {
         return workRepository.findAll();
     }
 
-    public List<Work> getAllWorksBySubId(Long subId){
+    public List<Work> getAllWorksBySubId(Long subId) {
         return workRepository.findAllBySubjectId(subjectService.getSubject(subId));
     }
     @Transactional
-    public void deleteWork(Long id){
+    public void deleteWork(Long id) {
         workRepository.deleteById(id);
     }
- }
+}

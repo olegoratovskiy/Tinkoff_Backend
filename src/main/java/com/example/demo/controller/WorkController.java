@@ -55,7 +55,7 @@ public class WorkController {
     }
 
     @DeleteMapping("delete/{id}")
-    public void deleteWorkById(@PathVariable @Valid Long id){
+    public void deleteWorkById(@PathVariable @Valid Long id) {
         workService.deleteWork(id);
     }
 }
