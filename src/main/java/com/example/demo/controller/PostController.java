@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@RestController
 @CrossOrigin(origins = "*")
+@RestController
 @RequestMapping("/posts")
 @AllArgsConstructor
 public class PostController {
@@ -37,8 +37,10 @@ public class PostController {
 
     @PostMapping("/create")
     public PostResponseDto createPost(@RequestBody @Valid PostRequestDto postRequestDto){
-        return postMapper.fromModelToDto(postService.createPost
-                (postMapper.fromDtoToModel(postRequestDto),postRequestDto.getIdWork()));
+        Post model = postMapper.fromDtoToModel(postRequestDto);
+        Long workId = postRequestDto.getIdWork();
+
+        return postMapper.fromModelToDto(postService.createPost(model,workId));
     }
 
     @GetMapping("/find_all_by_work_id/{id}")

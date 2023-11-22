@@ -8,4 +8,6 @@ import java.util.List;
 
 public interface SubjectRepository extends JpaRepository<Subject,Long> {
     List<Subject> findAllByEducationYearId(EducationYear educationYearId);
+
+    boolean existsSubjectByNameAndEducationYearId(String name, EducationYear educationYearId);
 }

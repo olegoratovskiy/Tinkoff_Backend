@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@RestController
 @CrossOrigin(origins = "*")
+@RestController
 @RequestMapping("/subjects")
 @AllArgsConstructor
 public class SubjectController {
@@ -22,9 +22,10 @@ public class SubjectController {
 
     @PostMapping("/create")
     public SubjectResponseDto createSubject(@RequestBody @Valid SubjectRequestDto subjectDto) {
-        return subjectMapper.fromModelToDto(
-                service.createSubject
-                        (subjectMapper.fromDtoToModel(subjectDto), subjectDto.getYearId()));
+        Subject model = subjectMapper.fromDtoToModel(subjectDto);
+        Long yearId = subjectDto.getYearId();
+
+        return subjectMapper.fromModelToDto(service.createSubject(model, yearId));
     }
 
     @GetMapping("/find/{id}")

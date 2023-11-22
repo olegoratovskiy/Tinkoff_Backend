@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@RestController
 @CrossOrigin(origins = "*")
+@RestController
 @AllArgsConstructor
 @RequestMapping("/works")
 public class WorkController {
@@ -46,16 +46,16 @@ public class WorkController {
     }
 
 
-
     @PostMapping("create")
     public WorkResponseDto createWork(@RequestBody @Valid WorkRequestDto workRequestDto) {
-        return workMapper.fromModelToDto(workService.
-                createWork(workMapper.
-                        fromDtoToModel(workRequestDto), workRequestDto.getIdSubject()));
+        Work model = workMapper.fromDtoToModel(workRequestDto);
+        Long subjectId = workRequestDto.getIdSubject();
+
+        return workMapper.fromModelToDto(workService.createWork(model, subjectId));
     }
 
     @DeleteMapping("delete/{id}")
-    public void deleteWorkById(@PathVariable @Valid Long id){
+    public void deleteWorkById(@PathVariable @Valid Long id) {
         workService.deleteWork(id);
     }
 }
