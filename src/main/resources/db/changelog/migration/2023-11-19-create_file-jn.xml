@@ -16,7 +16,7 @@
             <column name="post_id" type="bigint" defaultValue="null">
                 <constraints foreignKeyName="fk_post_file_ref_id" references="post_ref(id)"/>
             </column>
-            <column name="file_content" type="bytea"/>
+            <column name="file_content" type="blob"/>
             <column name="file_type" type="varchar(255)"/>
         </createTable>
     </changeSet>
