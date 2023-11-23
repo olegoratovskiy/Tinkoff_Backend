@@ -11,7 +11,7 @@ import lombok.Setter;
 @Table(name = "file_jn")
 public class File {
     @Id
-    @SequenceGenerator(name = "generator", sequenceName = "file_jn_id_seq)", allocationSize = 1)
+    @SequenceGenerator(name = "generator", sequenceName = "file_jn_id_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "generator")
     private Long id;
     @Lob
