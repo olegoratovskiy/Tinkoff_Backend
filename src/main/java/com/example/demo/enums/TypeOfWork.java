@@ -1,4 +1,4 @@
-package com.example.demo.types;
+package com.example.demo.enums;
 
 public enum TypeOfWork {
     Control, Lectures, Synopsis
