@@ -1,5 +1,6 @@
 package com.example.demo.entity;
 
+import com.example.demo.enums.FileType;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,8 +14,11 @@ public class File {
     @SequenceGenerator(name = "generator", sequenceName = "file_jn_id_seq)", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "generator")
     private Long id;
-    @Column(name = "file_url")
-    private String fileUrl;
+    @Lob
+    @Column(name = "file_content")
+    private byte[] content;
+    @Column(name = "file_type")
+    private FileType fileType;
     @ManyToOne
     @JoinColumn(name = "post_id")
     private Post postId;
