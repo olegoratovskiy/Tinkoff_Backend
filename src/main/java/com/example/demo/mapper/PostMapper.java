@@ -18,23 +18,8 @@ public interface PostMapper {
     @Mapping(target = "filesId", source = "post.files", qualifiedByName = "setFileId")
     PostResponseDto fromModelToDto(Post post);
 
-    @Mapping(target = "comments", source = "postRequestDto.commentsId", qualifiedByName = "setComments")
-    @Mapping(target = "files", source = "postRequestDto.filesId", qualifiedByName = "setFiles")
     Post fromDtoToModel(PostRequestDto postRequestDto);
 
-
-    @Named("setComments")
-    static List<Comment> setComments(List<Long> commentsId) {
-        if (commentsId != null) {
-            return commentsId.stream()
-                    .map(id -> {
-                        Comment comment = new Comment();
-                        comment.setId(id);
-                        return comment;
-                    }).toList();
-        }
-        return new ArrayList<>();
-    }
 
     @Named("setCommentId")
     static List<Long> setCommentId(List<Comment> comments) {
@@ -46,18 +31,6 @@ public interface PostMapper {
         return new ArrayList<>();
     }
 
-    @Named("setFiles")
-    static List<File> setFiles(List<Long> filesId) {
-        if (filesId != null) {
-            return filesId.stream()
-                    .map(id -> {
-                        File file = new File();
-                        file.setId(id);
-                        return file;
-                    }).toList();
-        }
-        return new ArrayList<>();
-    }
 
     @Named("setFileId")
     static List<Long> setFileId(List<File> files) {
