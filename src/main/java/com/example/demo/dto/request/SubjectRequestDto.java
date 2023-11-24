@@ -5,8 +5,6 @@ import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.List;
-
 @Getter
 @Setter
 public class SubjectRequestDto {
@@ -15,5 +13,4 @@ public class SubjectRequestDto {
     @Size(min = 2, message = "слишком короткое название")
     private String name;
     private Long yearId;
-    private List<Long> worksId;
 }
