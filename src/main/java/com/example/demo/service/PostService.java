@@ -28,7 +28,10 @@ public class PostService {
     }
 
     public Page<Post> getPostsByWorkId(long workId, int pageNumber, int pageSize) {
-        return postRepository.findAllByWorkIdId(workId, PageRequest.of(pageNumber, pageSize, Sort.Direction.ASC));
+        return postRepository.findAllByWorkIdId(
+                workId,
+                PageRequest.of(pageNumber, pageSize, Sort.by(Sort.Order.asc("id")))
+        );
     }
 
     public Post createPost(Post post, Long workId) {

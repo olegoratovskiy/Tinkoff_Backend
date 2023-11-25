@@ -32,7 +32,10 @@ public class CommentService {
     }
 
     public Page<Comment> getComments(long postId, int pageNumber, int pageSize) {
-        return commentRepository.findAllByPostIdId(postId, PageRequest.of(pageNumber, pageSize, Sort.Direction.ASC));
+        return commentRepository.findAllByPostIdId(
+                postId,
+                PageRequest.of(pageNumber, pageSize, Sort.by(Sort.Order.asc("id")))
+        );
     }
 
     private Post getPostByIdOrThrow(long id) {
