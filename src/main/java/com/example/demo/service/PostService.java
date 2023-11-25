@@ -5,6 +5,9 @@ import com.example.demo.entity.Work;
 import com.example.demo.exceptions.CreatingExistingEntityException;
 import com.example.demo.repository.PostRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,8 +27,8 @@ public class PostService {
         return postRepository.findAll();
     }
 
-    public List<Post> getAllPostsByWorkId(Long id) {
-        return postRepository.findAllByWorkId(workService.getWorkById(id));
+    public Page<Post> getPostsByWorkId(long workId, int pageNumber, int pageSize) {
+        return postRepository.findAllByWorkIdId(workId, PageRequest.of(pageNumber, pageSize, Sort.Direction.ASC));
     }
 
     public Post createPost(Post post, Long workId) {

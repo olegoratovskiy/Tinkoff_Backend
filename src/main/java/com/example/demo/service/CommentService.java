@@ -5,9 +5,10 @@ import com.example.demo.entity.Post;
 import com.example.demo.model.CreateCommentModel;
 import com.example.demo.repository.CommentRepository;
 import com.example.demo.repository.PostRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class CommentService {
@@ -30,9 +31,8 @@ public class CommentService {
         return commentRepository.save(comment);
     }
 
-    public List<Comment> getComments(long postId) {
-        var post = getPostByIdOrThrow(postId);
-        return post.getComments();
+    public Page<Comment> getComments(long postId, int pageNumber, int pageSize) {
+        return commentRepository.findAllByPostIdId(postId, PageRequest.of(pageNumber, pageSize, Sort.Direction.ASC));
     }
 
     private Post getPostByIdOrThrow(long id) {
