@@ -22,6 +22,11 @@ public class User {
     private String name;
     @Column(name = "password")
     private String password;
+    @Transient
+    private String passwordConfirm;
+
+    @Column(name = "role")
+    private String role;
     @OneToMany(mappedBy = "author", cascade = {CascadeType.PERSIST, CascadeType.MERGE},
             fetch = FetchType.LAZY)
     @ToString.Exclude
