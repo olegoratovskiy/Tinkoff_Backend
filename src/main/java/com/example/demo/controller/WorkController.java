@@ -20,7 +20,7 @@ public class WorkController {
     private WorkService workService;
     private WorkMapper workMapper;
 
-    @GetMapping("find/{id}")
+    @GetMapping("/find/{id}")
     public WorkResponseDto getWorkById(@PathVariable @Valid Long id) {
         return workMapper.fromModelToDto(workService.getWorkById(id));
     }
@@ -35,7 +35,7 @@ public class WorkController {
         return list;
     }
 
-    @GetMapping("find_all_by_sub_id/{id}")
+    @GetMapping("/find_all_by_sub_id/{id}")
     public List<WorkResponseDto> getAllWorks(@PathVariable @Valid Long id) {
         List<WorkResponseDto> list = new ArrayList<>();
         List<Work> worksList = workService.getAllWorksBySubId(id);
@@ -46,7 +46,7 @@ public class WorkController {
     }
 
 
-    @PostMapping("create")
+    @PostMapping("/create")
     public WorkResponseDto createWork(@RequestBody @Valid WorkRequestDto workRequestDto) {
         Work model = workMapper.fromDtoToModel(workRequestDto);
         Long subjectId = workRequestDto.getIdSubject();
@@ -54,7 +54,7 @@ public class WorkController {
         return workMapper.fromModelToDto(workService.createWork(model, subjectId));
     }
 
-    @DeleteMapping("delete/{id}")
+    @DeleteMapping("/delete/{id}")
     public void deleteWorkById(@PathVariable @Valid Long id) {
         workService.deleteWork(id);
     }
