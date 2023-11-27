@@ -15,6 +15,10 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.stereotype.Service;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+
+import java.util.Arrays;
 
 @EnableWebSecurity
 @EnableMethodSecurity(
@@ -52,8 +56,16 @@ public class WebSecurityConfig {
         httpSecurity
                 .csrf(AbstractHttpConfigurer::disable
                 )
-                .cors(AbstractHttpConfigurer::disable
-                )
+                .cors(cors -> {
+                    CorsConfigurationSource source = request -> {
+                        CorsConfiguration config = new CorsConfiguration();
+                        config.setAllowedOrigins(Arrays.asList("http://localhost:5173")); // Замените на нужный origin вашего фронтенда
+                        config.setAllowedHeaders(Arrays.asList("*"));
+                        config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+                        return config;
+                    };
+                    cors.configurationSource(source);
+                })
                 .authorizeHttpRequests(requests -> requests
                         .requestMatchers("/log/registration").permitAll()
                         .requestMatchers("/unsecured").permitAll()

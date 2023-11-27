@@ -23,7 +23,7 @@ public class CommentController {
         this.mapper = mapper;
     }
 
-    @PostMapping("create")
+    @PostMapping("/create")
     public CommentResponseDto createComment(@RequestBody @Valid CreateCommentRequestDto request) {
         var createCommentModel = mapper.requestToEntity(request);
         var createdComment = commentService.createComment(createCommentModel);
