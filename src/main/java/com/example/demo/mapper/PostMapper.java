@@ -8,7 +8,5 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "spring")
 public interface PostMapper {
     PostResponseDto fromModelToDto(Post post);
-
     Post fromDtoToModel(PostRequestDto postRequestDto);
-
 }

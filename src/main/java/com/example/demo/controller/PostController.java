@@ -7,6 +7,7 @@ import com.example.demo.dto.response.PostsResponseDto;
 import com.example.demo.entity.Post;
 import com.example.demo.mapper.PostMapper;
 import com.example.demo.service.PostService;
+import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -22,11 +23,13 @@ public class PostController {
     private PostMapper postMapper;
     private PostService postService;
 
+    @Transactional
     @GetMapping("/find/{id}")
     public PostResponseDto getPost(@PathVariable @Valid Long id) {
         return postMapper.fromModelToDto(postService.getPost(id));
     }
 
+    @Transactional
     @GetMapping("/find_all")
     public List<PostResponseDto> getAllPosts() {
         return postService.getAllPosts().stream()
@@ -42,6 +45,7 @@ public class PostController {
         return postMapper.fromModelToDto(postService.createPost(model, workId));
     }
 
+    @Transactional
     @GetMapping("/find_all_by_work_id/{workId}")
     public PostsResponseDto getPosts(
             @PathVariable long workId,
