@@ -1,6 +1,5 @@
 package com.example.demo.dto.response;
 
-import com.example.demo.entity.File;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,5 +12,5 @@ public class PostResponseDto {
     private String title;
     private String description;
     private WorkResponseDto workId;
-    private List<File> files;
+    private List<FileResponseDto> files;
 }
