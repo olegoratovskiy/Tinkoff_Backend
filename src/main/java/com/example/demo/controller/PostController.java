@@ -42,8 +42,9 @@ public class PostController {
         Post model = postMapper.fromDtoToModel(postRequestDto);
         Long workId = postRequestDto.getIdWork();
         String token = postRequestDto.getToken();
-
-        return postMapper.fromModelToDto(postService.createPost(model, workId,token));
+        System.out.println(token);
+        var post = postService.createPost(model, workId, token);
+        return postMapper.fromModelToDto(post);
     }
 
     @Transactional

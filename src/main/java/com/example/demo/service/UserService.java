@@ -14,7 +14,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -44,9 +43,8 @@ public class UserService implements UserDetailsService {
         return new org.springframework.security.core.userdetails.User(
                 user.getName(),
                 user.getPassword(),
-                user.getRoles().stream().map(role -> new SimpleGrantedAuthority
-                        (role.getName())).collect(Collectors.toList())
-        );
+                user.getRoles().stream().map(role -> new SimpleGrantedAuthority(role.getName()))
+                        .collect(Collectors.toList()));
     }
 
     public User createUser(RegistrationUserDto registrationUserDto) {

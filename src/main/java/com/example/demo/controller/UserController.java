@@ -15,13 +15,14 @@ import java.security.Principal;
 @RequestMapping("/users")
 public class UserController {
     private final UserService userService;
+
     @GetMapping("/unsecured")
     public String unsecuredData() {
         return "Unsecured data";
     }
 
     @GetMapping("/find_user_by_id/{id}")
-    public String getUserNameById(@PathVariable @Valid Long id){
+    public String getUserNameById(@PathVariable @Valid Long id) {
         return userService.findById(id).getName();
     }
 
