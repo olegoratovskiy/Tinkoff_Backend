@@ -38,7 +38,7 @@ public class PostService {
         );
     }
 
-    public Post createPost(Post post, Long workId) {
+    public Post createPost(Post post, Long workId,String token) {
 
         if (postExists(post, workId)) {
             String postTitle = post.getTitle();
@@ -51,8 +51,8 @@ public class PostService {
         }
 
         post.setWorkId(workService.getWorkById(workId));
-//        post.setAuthor(userService.findByUserName(jwtTokenUtils.getUsername(token))
-//                .orElseThrow(RuntimeException::new));
+        post.setAuthor(userService.findByUserName(jwtTokenUtils.getUsername(token))
+                .orElseThrow(RuntimeException::new));
         return postRepository.save(post);
     }
 

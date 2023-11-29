@@ -16,6 +16,6 @@ public class PostRequestDto {
     @Size(max = 250, message = "превышен лимит описания")
     private String description;
     private Long idWork;
-//    private String token;
+    private String token;
 
 }

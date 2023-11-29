@@ -41,11 +41,9 @@ public class PostController {
     public PostResponseDto createPost(@RequestBody @Valid PostRequestDto postRequestDto) {
         Post model = postMapper.fromDtoToModel(postRequestDto);
         Long workId = postRequestDto.getIdWork();
-        var post = postService.createPost(model, workId);
-//        String token = postRequestDto.getToken();
-        PostResponseDto response = postMapper.fromModelToDto(post);
-        response.setUserId(post.getAuthor().getId());
-        return postMapper.fromModelToDto(postService.createPost(model, workId));
+        String token = postRequestDto.getToken();
+
+        return postMapper.fromModelToDto(postService.createPost(model, workId,token));
     }
 
     @Transactional
