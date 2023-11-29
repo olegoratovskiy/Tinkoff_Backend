@@ -13,4 +13,5 @@ public class PostResponseDto {
     private String description;
     private WorkResponseDto workId;
     private List<FileResponseDto> files;
+    private Long userId;
 }

@@ -59,7 +59,7 @@ public class WebSecurityConfig {
                 .cors(cors -> {
                     CorsConfigurationSource source = request -> {
                         CorsConfiguration config = new CorsConfiguration();
-                        config.setAllowedOrigins(Arrays.asList("http://localhost:5173")); // Замените на нужный origin вашего фронтенда
+                        config.setAllowedOrigins(Arrays.asList("http://localhost:5173"));
                         config.setAllowedHeaders(Arrays.asList("*"));
                         config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
                         return config;
