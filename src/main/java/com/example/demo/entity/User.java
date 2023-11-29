@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.Collection;
 import java.util.List;
 
 @Getter
@@ -38,5 +39,13 @@ public class User {
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private List<Comment> comments;
+
+    @ManyToMany
+    @JoinTable(
+            name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+    private Collection<Role> roles;
 
 }

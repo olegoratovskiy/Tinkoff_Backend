@@ -15,7 +15,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -24,9 +26,14 @@ public class UserService implements UserDetailsService {
     private EntityManager em;
     private final UserRepository userRepository;
     private final PasswordEncoderConfiguration passwordEncoder;
+    private final RoleService roleService;
 
     public Optional<User> findByUserName(String name) {
         return userRepository.findByName(name);
+    }
+
+    public User findById(Long id) {
+        return userRepository.findById(id).orElseThrow(RuntimeException::new);
     }
 
     @Override
@@ -37,7 +44,8 @@ public class UserService implements UserDetailsService {
         return new org.springframework.security.core.userdetails.User(
                 user.getName(),
                 user.getPassword(),
-                Collections.singleton(new SimpleGrantedAuthority("+"))
+                user.getRoles().stream().map(role -> new SimpleGrantedAuthority
+                        (role.getName())).collect(Collectors.toList())
         );
     }
 
@@ -45,7 +53,7 @@ public class UserService implements UserDetailsService {
         User user = new User();
         user.setName(registrationUserDto.getUsername());
         user.setPassword(passwordEncoder.passwordEncoder().encode(registrationUserDto.getPassword()));
-        user.setRole("USER");
+        user.setRoles(List.of(roleService.getUserRole()));
         return userRepository.save(user);
 
     }

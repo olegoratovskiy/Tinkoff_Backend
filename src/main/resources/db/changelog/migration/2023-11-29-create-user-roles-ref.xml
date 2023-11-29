@@ -1,0 +1,24 @@
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <changeSet id="2023-11-29-v1-create-user-roles-jn" author="Sergey Andreychikov">
+        <preConditions>
+            <not>
+                <tableExists tableName="user_roles-ref"/>
+            </not>
+        </preConditions>
+        <createTable tableName="user_roles">
+            <column name="id" type="serial" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="user_id" type="bigint">
+                <constraints foreignKeyName="fk_user_ref_id" references="user_jn(id)"/>
+            </column>
+            <column name="role_id" type="bigint">
+                <constraints foreignKeyName="fk_role_jn_id" references="roles_jn(id)"/>
+            </column>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>
