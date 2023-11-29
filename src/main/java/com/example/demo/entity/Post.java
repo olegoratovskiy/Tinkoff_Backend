@@ -27,7 +27,7 @@ public class Post {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private User author;
+    private User userId;
 
     @OneToMany(mappedBy = "postId", cascade = {CascadeType.PERSIST, CascadeType.MERGE},
             fetch = FetchType.LAZY)

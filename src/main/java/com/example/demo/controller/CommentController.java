@@ -7,6 +7,7 @@ import com.example.demo.dto.response.PageInfoResponse;
 import com.example.demo.entity.Comment;
 import com.example.demo.mapper.CommentDtoMapper;
 import com.example.demo.service.CommentService;
+import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
@@ -23,13 +24,14 @@ public class CommentController {
         this.mapper = mapper;
     }
 
-    @PostMapping("create")
+    @PostMapping("/create")
     public CommentResponseDto createComment(@RequestBody @Valid CreateCommentRequestDto request) {
         var createCommentModel = mapper.requestToEntity(request);
         var createdComment = commentService.createComment(createCommentModel);
         return mapper.entityToResponse(createdComment);
     }
 
+    @Transactional
     @GetMapping("/{postId}")
     public CommentsResponseDto getComments(
             @PathVariable long postId,

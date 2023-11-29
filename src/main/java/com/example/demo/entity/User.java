@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.Collection;
 import java.util.List;
 
 @Getter
@@ -22,7 +23,12 @@ public class User {
     private String name;
     @Column(name = "password")
     private String password;
-    @OneToMany(mappedBy = "author", cascade = {CascadeType.PERSIST, CascadeType.MERGE},
+    @Transient
+    private String passwordConfirm;
+
+    @Column(name = "role")
+    private String role;
+    @OneToMany(mappedBy = "userId", cascade = {CascadeType.PERSIST, CascadeType.MERGE},
             fetch = FetchType.LAZY)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
@@ -33,5 +39,13 @@ public class User {
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private List<Comment> comments;
+
+    @ManyToMany
+    @JoinTable(
+            name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+    private Collection<Role> roles;
 
 }

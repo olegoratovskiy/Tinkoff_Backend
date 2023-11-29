@@ -4,6 +4,7 @@ import com.example.demo.entity.Post;
 import com.example.demo.entity.Work;
 import com.example.demo.exceptions.CreatingExistingEntityException;
 import com.example.demo.repository.PostRepository;
+import com.example.demo.utils.JwtTokenUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -18,6 +19,8 @@ import java.util.List;
 public class PostService {
     private PostRepository postRepository;
     private WorkService workService;
+    private UserService userService;
+    private final JwtTokenUtils jwtTokenUtils;
 
     public Post getPost(Long id) {
         return postRepository.findById(id).orElseThrow(RuntimeException::new);
@@ -34,7 +37,7 @@ public class PostService {
         );
     }
 
-    public Post createPost(Post post, Long workId) {
+    public Post createPost(Post post, Long workId, String token) {
 
         if (postExists(post, workId)) {
             String postTitle = post.getTitle();
@@ -47,6 +50,8 @@ public class PostService {
         }
 
         post.setWorkId(workService.getWorkById(workId));
+        post.setUserId(userService.findByUserName(jwtTokenUtils.getUsername(token))
+                .orElseThrow(RuntimeException::new));
         return postRepository.save(post);
     }
 
