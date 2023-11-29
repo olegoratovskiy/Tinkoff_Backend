@@ -42,7 +42,6 @@ public class PostController {
         Post model = postMapper.fromDtoToModel(postRequestDto);
         Long workId = postRequestDto.getIdWork();
         String token = postRequestDto.getToken();
-        System.out.println(token);
         var post = postService.createPost(model, workId, token);
         var response = postMapper.fromModelToDto(post);
         return response;
