@@ -4,7 +4,6 @@ import com.example.demo.dto.request.UserGenderDto;
 import com.example.demo.dto.response.FileResponseDto;
 import com.example.demo.dto.response.PhotoResponseDto;
 import com.example.demo.dto.response.UserCabinetResponseDto;
-import com.example.demo.dto.response.UserResponseDto;
 import com.example.demo.entity.User;
 import com.example.demo.exceptions.handlers.UserNotFoundError;
 import com.example.demo.mapper.FileDtoMapper;
@@ -72,7 +71,6 @@ public class UserController {
     public FileResponseDto getUserPhoto(@PathVariable("id") Long id) {
         return photoMapper.entityToResponse(fileService.getPhoto(id));
     }
-
 
     @PostMapping("/add_gender")
     public User addGender(@RequestBody UserGenderDto userGenderDto) {

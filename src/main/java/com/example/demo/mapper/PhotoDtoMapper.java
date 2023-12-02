@@ -1,6 +1,5 @@
 package com.example.demo.mapper;
 
-import com.example.demo.dto.response.FileResponseDto;
 import com.example.demo.dto.response.PhotoResponseDto;
 import com.example.demo.entity.File;
 import org.springframework.stereotype.Component;
