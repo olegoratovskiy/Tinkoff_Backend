@@ -21,6 +21,7 @@
                 <constraints foreignKeyName="fk_user_post_jn_id" references="user_jn(id)"/>
             </column>
             <column name="description" type="text" defaultValue="null"/>
+            <column name="created_at" type="varchar(255)" defaultValue="null"/>
         </createTable>
         <sql>
             alter table post_ref
