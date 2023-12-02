@@ -2,7 +2,10 @@ package com.example.demo.service;
 
 import com.example.demo.config.PasswordEncoderConfiguration;
 import com.example.demo.dto.request.RegistrationUserDto;
+import com.example.demo.dto.request.UserGenderDto;
+import com.example.demo.dto.response.UserCabinetResponseDto;
 import com.example.demo.entity.User;
+import com.example.demo.exceptions.handlers.UserNotFoundError;
 import com.example.demo.repository.UserRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -26,6 +29,8 @@ public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
     private final PasswordEncoderConfiguration passwordEncoder;
     private final RoleService roleService;
+
+    private final FileService fileService;
 
     public Optional<User> findByUserName(String name) {
         return userRepository.findByName(name);
@@ -52,7 +57,30 @@ public class UserService implements UserDetailsService {
         user.setName(registrationUserDto.getUsername());
         user.setPassword(passwordEncoder.passwordEncoder().encode(registrationUserDto.getPassword()));
         user.setRoles(List.of(roleService.getUserRole()));
+        user.setGender(registrationUserDto.getGender());
         return userRepository.save(user);
 
+    }
+
+    public User addGender(UserGenderDto userGenderDto) {
+        var person = findById(userGenderDto.getUserId());
+        person.setGender(userGenderDto.getGender());
+        return userRepository.save(person);
+    }
+
+    public UserCabinetResponseDto getUserCabinetById(Long id) {
+        var user = findById(id);
+        UserCabinetResponseDto res = new UserCabinetResponseDto();
+        res.setId(user.getId());
+        res.setName(user.getName());
+        res.setRole(user.getRole());
+        res.setGender(user.getGender());
+
+        return res;
+    }
+
+    public Long getUserByName(String username) throws UserNotFoundError {
+        var user =  userRepository.findByName(username).orElseThrow(() -> new UserNotFoundError("нет такого пользователя"));
+        return user.getId();
     }
 }
