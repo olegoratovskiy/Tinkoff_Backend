@@ -2,6 +2,16 @@ package com.example.demo.controller;
 
 import com.example.demo.dto.request.UserGenderDto;
 import com.example.demo.dto.response.FileResponseDto;
+import com.example.demo.dto.response.PhotoResponseDto;
+import com.example.demo.dto.response.UserCabinetResponseDto;
+import com.example.demo.dto.response.UserResponseDto;
+import com.example.demo.entity.User;
+import com.example.demo.exceptions.handlers.UserNotFoundError;
+import com.example.demo.mapper.FileDtoMapper;
+import com.example.demo.mapper.PhotoDtoMapper;
+import com.example.demo.service.FileService;
+import com.example.demo.dto.request.UserGenderDto;
+import com.example.demo.dto.response.FileResponseDto;
 import com.example.demo.dto.response.UserAccountResponseDto;
 import com.example.demo.entity.User;
 import com.example.demo.exceptions.handlers.UserNotFoundError;
@@ -21,12 +31,10 @@ import java.security.Principal;
 @RequiredArgsConstructor
 @RequestMapping("/users")
 public class UserController {
+
     private final UserService userService;
-
     private final FileService fileService;
-
     private final FileDtoMapper photoMapper;
-
     private final FileDtoMapper mapper;
 
     @GetMapping("/unsecured")

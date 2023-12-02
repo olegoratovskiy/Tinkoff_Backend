@@ -4,6 +4,8 @@ import com.example.demo.config.PasswordEncoderConfiguration;
 import com.example.demo.dto.request.RegistrationUserDto;
 import com.example.demo.dto.request.UserGenderDto;
 import com.example.demo.dto.response.UserAccountResponseDto;
+import com.example.demo.dto.request.UserGenderDto;
+import com.example.demo.dto.response.UserCabinetResponseDto;
 import com.example.demo.entity.User;
 import com.example.demo.exceptions.handlers.UserNotFoundError;
 import com.example.demo.repository.UserRepository;
@@ -24,12 +26,10 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class UserService implements UserDetailsService {
-    @PersistenceContext
-    private EntityManager em;
+
     private final UserRepository userRepository;
     private final PasswordEncoderConfiguration passwordEncoder;
     private final RoleService roleService;
-
     private final FileService fileService;
 
     public Optional<User> findByUserName(String name) {
@@ -80,9 +80,9 @@ public class UserService implements UserDetailsService {
     }
 
     public Long getUserByName(String username) throws UserNotFoundError {
-        var user =  userRepository.findByName(username)
-                .orElseThrow(
-                        () -> new UserNotFoundError("no user with username: " + username));
+        var user =  userRepository.findByName(username).orElseThrow(
+                        () -> new UserNotFoundError("no user with username: " + username)
+        );
         return user.getId();
     }
 }
