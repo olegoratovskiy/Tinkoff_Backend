@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -29,15 +30,18 @@ public class Post {
     @JoinColumn(name = "user_id")
     private User userId;
 
-    @OneToMany(mappedBy = "postId", cascade = {CascadeType.PERSIST, CascadeType.MERGE},
+    @OneToMany(mappedBy = "postId", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE},
             fetch = FetchType.LAZY)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private List<Comment> comments;
 
-    @OneToMany(mappedBy = "postId", cascade = {CascadeType.PERSIST, CascadeType.MERGE},
+    @OneToMany(mappedBy = "postId", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE},
             fetch = FetchType.LAZY)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private List<File> files;
+
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
 }

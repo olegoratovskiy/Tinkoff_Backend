@@ -12,4 +12,5 @@
     <include file="db/changelog/migration/2023-11-19-create-comment-jn.xml"/>
     <include file="db/changelog/migration/2023-29-11-create-roles-jn.xml"/>
     <include file="db/changelog/migration/2023-11-29-create-user-roles-ref.xml"/>
+    <include file="db/changelog/migration/2023-12-02-create-shedlock.xml"/>
 </databaseChangeLog>
