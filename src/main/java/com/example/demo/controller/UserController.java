@@ -1,5 +1,8 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.response.UserResponseDto;
+import com.example.demo.entity.User;
+import com.example.demo.mapper.UserMapper;
 import com.example.demo.dto.request.UserGenderDto;
 import com.example.demo.dto.response.FileResponseDto;
 import com.example.demo.entity.User;
@@ -13,9 +16,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -23,6 +30,7 @@ import java.security.Principal;
 public class UserController {
 
     private final UserService userService;
+    private final UserMapper userMapper;
     private final FileService fileService;
     private final FileDtoMapper photoMapper;
     private final FileDtoMapper mapper;
@@ -35,6 +43,27 @@ public class UserController {
     @GetMapping("/find_user_by_id/{id}")
     public String getUserNameById(@PathVariable @Valid Long id) {
         return userService.findById(id).getName();
+    }
+
+    @GetMapping("/find_all_users")
+    public List<UserResponseDto> getAllUser() {
+        List<UserResponseDto> list = new ArrayList<>();
+        List<User> userList = userService.getAllUsers();
+        for (User user : userList) {
+            list.add(userMapper.fromModelToDto(user));
+        }
+        return list;
+    }
+
+    @DeleteMapping("/ban/{id}")
+    public void banById(@PathVariable @Valid Long id) {
+        userService.deleteUser(id);
+    }
+
+    @Transactional
+    @PostMapping("/unban/{id}")
+    public void unbanById(@PathVariable @Valid Long id) {
+        userService.unbanUser(id);
     }
 
     @GetMapping("/secured")

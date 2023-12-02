@@ -35,6 +35,22 @@ public class UserService implements UserDetailsService {
         return userRepository.findById(id).orElseThrow(RuntimeException::new);
     }
 
+    @Transactional
+    public void deleteUser(Long id) {
+        var user = findById(id);
+        user.setDelete(true);
+        userRepository.save(user);
+    }
+
+    public boolean checkForBan(String username) {
+        var user = findByUserName(username).get();
+        return user.isDelete();
+    }
+
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
+    }
+
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -45,6 +61,13 @@ public class UserService implements UserDetailsService {
                 user.getPassword(),
                 user.getRoles().stream().map(role -> new SimpleGrantedAuthority(role.getName()))
                         .collect(Collectors.toList()));
+    }
+
+    @Transactional
+    public void unbanUser(Long id) {
+        var user = findById(id);
+        user.setDelete(false);
+        userRepository.save(user);
     }
 
     public User createUser(RegistrationUserDto registrationUserDto) {
