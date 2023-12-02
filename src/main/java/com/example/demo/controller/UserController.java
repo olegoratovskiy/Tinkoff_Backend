@@ -2,13 +2,11 @@ package com.example.demo.controller;
 
 import com.example.demo.dto.request.UserGenderDto;
 import com.example.demo.dto.response.FileResponseDto;
-import com.example.demo.dto.response.PhotoResponseDto;
-import com.example.demo.dto.response.UserCabinetResponseDto;
+import com.example.demo.dto.response.UserAccountResponseDto;
 import com.example.demo.entity.User;
 import com.example.demo.exceptions.handlers.UserNotFoundError;
 import com.example.demo.mapper.FileDtoMapper;
-import com.example.demo.mapper.PhotoDtoMapper;
-import com.example.demo.service.PhotoService;
+import com.example.demo.service.FileService;
 import com.example.demo.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -25,9 +23,9 @@ import java.security.Principal;
 public class UserController {
     private final UserService userService;
 
-    private final PhotoService photoService;
+    private final FileService fileService;
 
-    private final PhotoDtoMapper photoMapper;
+    private final FileDtoMapper photoMapper;
 
     private final FileDtoMapper mapper;
 
@@ -58,13 +56,13 @@ public class UserController {
 
     @PostMapping(value = "save", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public FileResponseDto saveFile(@RequestPart MultipartFile request, long postId) throws IOException {
-        var savedFile = photoService.savePhoto(request.getBytes(), postId);
+        var savedFile = fileService.savePhoto(request.getBytes(), postId);
         return mapper.entityToResponse(savedFile.getPhoto());
     }
 
     @GetMapping("/get_photo/{id}")
-    public PhotoResponseDto getUserPhoto(@PathVariable("id") Long id) {
-        return photoMapper.entityToResponse(photoService.getPhoto(id));
+    public FileResponseDto getUserPhoto(@PathVariable("id") Long id) {
+        return photoMapper.entityToResponse(fileService.getPhoto(id));
     }
 
 
@@ -83,8 +81,8 @@ public class UserController {
     }
 
     @GetMapping("/get_cabinet/{userId}")
-    public UserCabinetResponseDto getUserCabinet(@PathVariable("userId") Long id) {
-        return userService.getUserCabinetById(id);
+    public UserAccountResponseDto getUserAccount(@PathVariable("userId") Long id) {
+        return userService.getUserAccountById(id);
     }
 
     @GetMapping("/get_username/{username}")

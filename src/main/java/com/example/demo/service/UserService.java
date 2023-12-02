@@ -3,7 +3,7 @@ package com.example.demo.service;
 import com.example.demo.config.PasswordEncoderConfiguration;
 import com.example.demo.dto.request.RegistrationUserDto;
 import com.example.demo.dto.request.UserGenderDto;
-import com.example.demo.dto.response.UserCabinetResponseDto;
+import com.example.demo.dto.response.UserAccountResponseDto;
 import com.example.demo.entity.User;
 import com.example.demo.exceptions.handlers.UserNotFoundError;
 import com.example.demo.repository.UserRepository;
@@ -68,9 +68,9 @@ public class UserService implements UserDetailsService {
         return userRepository.save(person);
     }
 
-    public UserCabinetResponseDto getUserCabinetById(Long id) {
+    public UserAccountResponseDto getUserAccountById(Long id) {
         var user = findById(id);
-        UserCabinetResponseDto res = new UserCabinetResponseDto();
+        UserAccountResponseDto res = new UserAccountResponseDto();
         res.setId(user.getId());
         res.setName(user.getName());
         res.setRole(user.getRole());
@@ -82,7 +82,7 @@ public class UserService implements UserDetailsService {
     public Long getUserByName(String username) throws UserNotFoundError {
         var user =  userRepository.findByName(username)
                 .orElseThrow(
-                        () -> new UserNotFoundError("нет такого пользователя"));
+                        () -> new UserNotFoundError("no user with username: " + username));
         return user.getId();
     }
 }

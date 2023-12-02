@@ -4,7 +4,7 @@ import lombok.Data;
 
 
 @Data
-public class UserCabinetResponseDto {
+public class UserAccountResponseDto {
     private Long id;
     private String name;
     private String role;
