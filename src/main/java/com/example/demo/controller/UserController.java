@@ -4,12 +4,10 @@ import com.example.demo.dto.request.UserGenderDto;
 import com.example.demo.dto.response.FileResponseDto;
 import com.example.demo.dto.response.PhotoResponseDto;
 import com.example.demo.dto.response.UserCabinetResponseDto;
-import com.example.demo.dto.response.UserResponseDto;
 import com.example.demo.entity.User;
 import com.example.demo.exceptions.handlers.UserNotFoundError;
 import com.example.demo.mapper.FileDtoMapper;
 import com.example.demo.mapper.PhotoDtoMapper;
-import com.example.demo.service.FileService;
 import com.example.demo.service.PhotoService;
 import com.example.demo.service.UserService;
 import jakarta.validation.Valid;
@@ -66,8 +64,9 @@ public class UserController {
 
     @GetMapping("/get_photo/{id}")
     public PhotoResponseDto getUserPhoto(@PathVariable("id") Long id) {
-        return photoMapper. entityToResponse(photoService.getPhoto(id));
+        return photoMapper.entityToResponse(photoService.getPhoto(id));
     }
+
 
     @PostMapping("/add_gender")
     public User addGender(@RequestBody UserGenderDto userGenderDto) {

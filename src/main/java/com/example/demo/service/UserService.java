@@ -80,7 +80,9 @@ public class UserService implements UserDetailsService {
     }
 
     public Long getUserByName(String username) throws UserNotFoundError {
-        var user =  userRepository.findByName(username).orElseThrow(() -> new UserNotFoundError("нет такого пользователя"));
+        var user =  userRepository.findByName(username)
+                .orElseThrow(
+                        () -> new UserNotFoundError("нет такого пользователя"));
         return user.getId();
     }
 }

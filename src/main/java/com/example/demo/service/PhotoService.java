@@ -1,6 +1,5 @@
 package com.example.demo.service;
 
-
 import com.example.demo.entity.File;
 import com.example.demo.entity.User;
 import com.example.demo.enums.FileType;
@@ -32,10 +31,9 @@ public class PhotoService {
     }
 
     public File getPhoto(Long id) {
-        var user = userRepository.findById(id).orElseThrow(
-                () -> new IllegalArgumentException(("No file with id: ") + id)
-        );
-        return user.getPhoto();
+        return userRepository.findById(id).orElseThrow(
+                () -> new IllegalArgumentException("No file with id: " + id)
+        ).getPhoto();
     }
 
     private User getUserByIdOrThrow(long id) {
