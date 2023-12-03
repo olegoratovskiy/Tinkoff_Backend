@@ -67,7 +67,7 @@ public class PostController {
         );
     }
 
-    @DeleteMapping("/delete{id}")
+    @DeleteMapping("/delete/{id}")
     public void deletePost(@PathVariable @Valid Long id) {
         postService.deletePost(id);
     }

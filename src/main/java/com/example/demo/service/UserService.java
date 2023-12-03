@@ -35,6 +35,22 @@ public class UserService implements UserDetailsService {
         return userRepository.findById(id).orElseThrow(RuntimeException::new);
     }
 
+    @Transactional
+    public void deleteUser(Long id) {
+        var user = findById(id);
+        user.setBanned(true);
+        userRepository.save(user);
+    }
+
+    public boolean checkForBan(String username) {
+        var user = findByUserName(username).get();
+        return user.isBanned();
+    }
+
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
+    }
+
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -45,6 +61,13 @@ public class UserService implements UserDetailsService {
                 user.getPassword(),
                 user.getRoles().stream().map(role -> new SimpleGrantedAuthority(role.getName()))
                         .collect(Collectors.toList()));
+    }
+
+    @Transactional
+    public void unbanUser(long id) {
+        var user = findById(id);
+        user.setBanned(false);
+        userRepository.save(user);
     }
 
     public User createUser(RegistrationUserDto registrationUserDto) {
@@ -63,7 +86,7 @@ public class UserService implements UserDetailsService {
         return userRepository.save(person);
     }
 
-    public UserAccountResponseDto getUserAccountById(Long id) {
+    public UserAccountResponseDto getUserAccountById(long id) {
         var user = findById(id);
         UserAccountResponseDto res = new UserAccountResponseDto();
         res.setId(user.getId());
@@ -75,8 +98,8 @@ public class UserService implements UserDetailsService {
     }
 
     public Long getUserByName(String username) throws UserNotFoundError {
-        var user =  userRepository.findByName(username).orElseThrow(
-                        () -> new UserNotFoundError("No user with username: " + username)
+        var user = userRepository.findByName(username).orElseThrow(
+                () -> new UserNotFoundError("No user with username: " + username)
         );
         return user.getId();
     }
