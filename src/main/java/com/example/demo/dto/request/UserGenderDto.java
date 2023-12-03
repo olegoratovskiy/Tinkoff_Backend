@@ -1,10 +1,9 @@
 package com.example.demo.dto.request;
 
+import lombok.Value;
 
-import lombok.Data;
-
-@Data
+@Value
 public class UserGenderDto {
-    private Long userId;
-    private String gender;
+    Long userId;
+    String gender;
 }

@@ -73,7 +73,7 @@ public class UserController {
         return userService.findById(id).getName();
     }
     @GetMapping("/get_gender/{userId}")
-    public String getGenderByUserId(@PathVariable("userId") Long id) {
+    public String getGenderByUserId(@PathVariable("userId") long id) {
         return userService.findById(id).getGender();
     }
 
@@ -83,7 +83,7 @@ public class UserController {
     }
 
     @GetMapping("/get_username/{username}")
-    public Long getIdByUsername(@PathVariable("username") String username) throws UserNotFoundError {
+    public Long getIdByUsername(@PathVariable String username) throws UserNotFoundError {
         return userService.getUserByName(username);
     }
 }

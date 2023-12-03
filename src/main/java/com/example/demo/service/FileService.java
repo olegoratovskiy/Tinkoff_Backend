@@ -14,7 +14,6 @@ public class FileService {
 
     private final FileRepository fileRepository;
     private final PostRepository postRepository;
-
     private final UserRepository userRepository;
 
     public FileService(FileRepository fileRepository, PostRepository postRepository, UserRepository userRepository) {
