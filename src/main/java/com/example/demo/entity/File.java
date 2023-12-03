@@ -22,4 +22,7 @@ public class File {
     @ManyToOne
     @JoinColumn(name = "post_id")
     private Post postId;
+    @OneToOne
+    @JoinColumn(name = "photo_id")
+    private User userId;
 }

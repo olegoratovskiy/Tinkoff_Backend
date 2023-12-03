@@ -16,6 +16,7 @@
             <column name="name" type="varchar(255)" defaultValue="null"/>
             <column name="role" type="varchar(255)" defaultValue="null"/>
             <column name="password" type="varchar(255)" defaultValue="null"/>
+            <column name="gender" type="varchar(255)" defaultValue="null"/>
         </createTable>
         <sql>
             alter table user_jn
