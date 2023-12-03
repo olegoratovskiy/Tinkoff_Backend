@@ -34,6 +34,9 @@ public class CleanUpTaskScheduler {
         commentRepository.deleteAllByCreatedAtBefore(beforeLocalDateTime);
     }
 
+    // Представим что там реально много данных, можете нагенерить их для теста. Транзакция очень долго висит.
+    // Нужно сделать обработку батчами, где каждая пачка - транзакция.
+    // Вынести в app.properties сам крон, поресерчить возможность динамически его менять.
     @Scheduled(cron = "0 */15 * * * *")
     @SchedulerLock(name = "CleanUpTaskScheduler_cleanUpPosts")
     @Transactional
