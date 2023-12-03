@@ -64,7 +64,7 @@ public class UserService implements UserDetailsService {
     }
 
     @Transactional
-    public void unbanUser(long id) {
+    public void unbanUser(Long id) {
         var user = findById(id);
         user.setBanned(false);
         userRepository.save(user);

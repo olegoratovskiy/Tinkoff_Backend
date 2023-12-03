@@ -28,13 +28,13 @@ public class User {
 
     @Column(name = "role")
     private String role;
-    @OneToMany(mappedBy = "userId",  cascade = CascadeType.ALL,
+    @OneToMany(mappedBy = "userId", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE},
             fetch = FetchType.LAZY)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private List<Post> posts;
 
-    @OneToMany(mappedBy = "author",  cascade = CascadeType.ALL,
+    @OneToMany(mappedBy = "author", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE},
             fetch = FetchType.LAZY)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
@@ -56,7 +56,5 @@ public class User {
 
     @Column(name = "gender")
     private String gender;
-
     private boolean isBanned = Boolean.FALSE;
-
 }
