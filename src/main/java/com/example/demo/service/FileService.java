@@ -10,7 +10,7 @@ import com.example.demo.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
 /**
- * Попробуйте если будет возможность сделать реализацию на с3, хотяб начать знакомится
+ * Попробуйте если будет возможность сделать реализацию на с3, хотяб начать знакомиться
  */
 @Service
 public class FileService {
