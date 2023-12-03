@@ -42,6 +42,7 @@ public class UserController {
         return "Secured data";
     }
 
+    // полагаю недоделанный функционал
     @GetMapping("/admin")
     public String adminData() {
         return "Admin data";

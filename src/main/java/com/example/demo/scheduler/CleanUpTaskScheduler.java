@@ -26,6 +26,8 @@ public class CleanUpTaskScheduler {
         System.out.println("Hello, world");
     }
 
+    // Представим что там реально много данных, можете нагенерить их для теста. Транзакция очень долго висит.
+    // Нужно сделать обработку батчами, где каждая пачка - транзакция.
     @Scheduled(cron = "0 */15 * * * *")
     @SchedulerLock(name = "CleanUpTaskScheduler_cleanUpComments")
     @Transactional

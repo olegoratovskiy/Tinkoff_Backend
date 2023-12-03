@@ -31,6 +31,7 @@ public class CommentController {
         return mapper.entityToResponse(createdComment);
     }
 
+    // фильтрация анонимных коментов других пользователей?
     @Transactional
     @GetMapping("/{postId}")
     public CommentsResponseDto getComments(
