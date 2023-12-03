@@ -9,6 +9,9 @@ import com.example.demo.repository.PostRepository;
 import com.example.demo.repository.UserRepository;
 import org.springframework.stereotype.Service;
 
+/**
+ * Попробуйте если будет возможность сделать реализацию на с3, хотяб начать знакомится
+ */
 @Service
 public class FileService {
 
