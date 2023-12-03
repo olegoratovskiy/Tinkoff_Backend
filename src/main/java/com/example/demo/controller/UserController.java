@@ -1,7 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.dto.request.UserGenderDto;
-import com.example.demo.dto.response.FileResponseDto;]
+import com.example.demo.dto.response.FileResponseDto;
 import com.example.demo.entity.User;
 import com.example.demo.exceptions.handlers.UserNotFoundError;
 import com.example.demo.mapper.FileDtoMapper;
