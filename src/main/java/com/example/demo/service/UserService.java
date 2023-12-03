@@ -38,13 +38,13 @@ public class UserService implements UserDetailsService {
     @Transactional
     public void deleteUser(Long id) {
         var user = findById(id);
-        user.setDelete(true);
+        user.setBanned(true);
         userRepository.save(user);
     }
 
     public boolean checkForBan(String username) {
         var user = findByUserName(username).get();
-        return user.isDelete();
+        return user.isBanned();
     }
 
     public List<User> getAllUsers() {
@@ -64,9 +64,9 @@ public class UserService implements UserDetailsService {
     }
 
     @Transactional
-    public void unbanUser(Long id) {
+    public void unbanUser(long id) {
         var user = findById(id);
-        user.setDelete(false);
+        user.setBanned(false);
         userRepository.save(user);
     }
 
@@ -86,7 +86,7 @@ public class UserService implements UserDetailsService {
         return userRepository.save(person);
     }
 
-    public UserAccountResponseDto getUserAccountById(Long id) {
+    public UserAccountResponseDto getUserAccountById(long id) {
         var user = findById(id);
         UserAccountResponseDto res = new UserAccountResponseDto();
         res.setId(user.getId());
@@ -98,8 +98,8 @@ public class UserService implements UserDetailsService {
     }
 
     public Long getUserByName(String username) throws UserNotFoundError {
-        var user =  userRepository.findByName(username).orElseThrow(
-                        () -> new UserNotFoundError("No user with username: " + username)
+        var user = userRepository.findByName(username).orElseThrow(
+                () -> new UserNotFoundError("No user with username: " + username)
         );
         return user.getId();
     }

@@ -57,6 +57,6 @@ public class User {
     @Column(name = "gender")
     private String gender;
 
-    private boolean delete = Boolean.FALSE;
+    private boolean isBanned = Boolean.FALSE;
 
 }

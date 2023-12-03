@@ -9,6 +9,6 @@ public class UserResponseDto {
     private Long id;
     private String name;
     private String password;
-    private boolean delete;
+    private boolean isBanned;
     private String gender;
 }
