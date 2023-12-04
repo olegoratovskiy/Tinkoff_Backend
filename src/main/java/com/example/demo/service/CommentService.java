@@ -40,7 +40,7 @@ public class CommentService {
         comment.setAuthor(userService.findByUserName(
                         jwtTokenUtils.getUsername(token))
                 .orElseThrow(RuntimeException::new));
-        comment.setAnonymous(Boolean.parseBoolean(model.getIsAnonymous()));
+        comment.setAnonymous((model.isAnonymous()));
         return commentRepository.save(comment);
     }
 

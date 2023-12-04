@@ -23,7 +23,7 @@ public class CommentDtoMapper {
                 request.getContent(),
                 request.getPostId(),
                 LocalDateTime.now(),
-                request.getIsAnonymous()
+                request.isAnonymous()
         );
     }
 
