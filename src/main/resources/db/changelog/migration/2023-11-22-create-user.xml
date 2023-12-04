@@ -18,6 +18,7 @@
             <column name="password" type="varchar(255)" defaultValue="null"/>
             <column name="gender" type="varchar(255)" defaultValue="null"/>
             <column name="is_banned" type="boolean"/>
+            <column name="email" type="varchar(255)" defaultValue="null"/>
         </createTable>
         <sql>
             alter table user_jn
