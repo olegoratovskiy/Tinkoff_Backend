@@ -14,4 +14,5 @@ public class CreateCommentModel {
     long postId;
     @NotNull
     LocalDateTime createdAt;
+    String isAnonymous;
 }

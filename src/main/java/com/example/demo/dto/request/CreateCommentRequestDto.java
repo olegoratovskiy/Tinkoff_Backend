@@ -11,4 +11,5 @@ public class CreateCommentRequestDto {
     String content;
     int postId;
     String token;
+    String isAnonymous;
 }

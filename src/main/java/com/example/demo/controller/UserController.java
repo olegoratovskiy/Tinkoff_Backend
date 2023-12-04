@@ -5,7 +5,6 @@ import com.example.demo.dto.request.UserGenderDto;
 import com.example.demo.dto.response.FileResponseDto;
 import com.example.demo.dto.response.UserAccountResponseDto;
 import com.example.demo.dto.response.UserResponseDto;
-import com.example.demo.entity.User;
 import com.example.demo.exceptions.handlers.UserNotFoundError;
 import com.example.demo.mapper.FileDtoMapper;
 import com.example.demo.mapper.UserMapper;
@@ -73,13 +72,13 @@ public class UserController {
     @PostMapping("/gender/add")
     public UserAccountResponseDto addGender(@RequestBody UserGenderDto userGenderDto) {
         userService.addGender(userGenderDto);
-        return userService.getUserAccountById(userGenderDto.getUserId() );
+        return userService.getUserAccountById(userGenderDto.getUserId());
     }
 
     @PostMapping("/name/change")
     public UserAccountResponseDto addGender(@RequestBody UserChangeNameDto userChangeNameDto) {
         userService.changeName(userChangeNameDto);
-        return userService.getUserAccountById(userChangeNameDto.getUserId() );
+        return userService.getUserAccountById(userChangeNameDto.getUserId());
     }
 
 

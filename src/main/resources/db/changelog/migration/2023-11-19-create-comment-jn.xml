@@ -21,6 +21,7 @@
                 <constraints foreignKeyName="fk_user_comment_jn_id" references="user_jn(id)"/>
             </column>
             <column name="created_at" type="varchar(255)" defaultValue="null"/>
+            <column name="is_anonymous" type="boolean"/>
         </createTable>
     </changeSet>
 </databaseChangeLog>

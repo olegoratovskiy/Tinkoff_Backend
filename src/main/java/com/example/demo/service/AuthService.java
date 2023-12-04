@@ -37,7 +37,7 @@ public class AuthService {
         UserDetails userDetails = userService.loadUserByUsername(authRequest.getUsername());
         Long id = userService.findByUserName(authRequest.getUsername()).get().getId();
         String token = jwtTokenUtils.generateToken(userDetails);
-        return ResponseEntity.ok(new JwtResponse(id,token));
+        return ResponseEntity.ok(new JwtResponse(id, token));
     }
 
     public ResponseEntity<?> createNewUser(@RequestBody RegistrationUserDto registrationUserDto) {
