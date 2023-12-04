@@ -56,5 +56,7 @@ public class User {
 
     @Column(name = "gender")
     private String gender;
+    @Column(name = "email")
+    private String email;
     private boolean isBanned = Boolean.FALSE;
 }
