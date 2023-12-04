@@ -24,18 +24,19 @@ public class PostController {
     private PostService postService;
 
     @Transactional
-    @GetMapping("/find/{id}")
-    public PostResponseDto getPost(@PathVariable @Valid Long id) {
-        return postMapper.fromModelToDto(postService.getPost(id));
-    }
-
-    @Transactional
-    @GetMapping("/find_all")
+    @GetMapping("/get/all")
     public List<PostResponseDto> getAllPosts() {
         return postService.getAllPosts().stream()
                 .map(postMapper::fromModelToDto)
                 .toList();
     }
+
+    @Transactional
+    @GetMapping("/get/{id}")
+    public PostResponseDto getPost(@PathVariable @Valid Long id) {
+        return postMapper.fromModelToDto(postService.getPost(id));
+    }
+
 
     @PostMapping("/create")
     public PostResponseDto createPost(@RequestBody @Valid PostRequestDto postRequestDto) {
@@ -43,14 +44,13 @@ public class PostController {
         Long workId = postRequestDto.getIdWork();
         String token = postRequestDto.getToken();
         var post = postService.createPost(model, workId, token);
-        var response = postMapper.fromModelToDto(post);
-        return response;
+        return postMapper.fromModelToDto(post);
     }
 
     @Transactional
-    @GetMapping("/find_all_by_work_id/{workId}")
+    @GetMapping("/get")
     public PostsResponseDto getPosts(
-            @PathVariable long workId,
+            @RequestParam long workId,
             @RequestParam int pageNumber,
             @RequestParam int pageSize
     ) {
