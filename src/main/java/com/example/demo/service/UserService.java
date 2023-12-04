@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import com.example.demo.config.PasswordEncoderConfiguration;
 import com.example.demo.dto.request.RegistrationUserDto;
+import com.example.demo.dto.request.UserChangeNameDto;
 import com.example.demo.dto.request.UserGenderDto;
 import com.example.demo.dto.response.UserAccountResponseDto;
 import com.example.demo.entity.User;
@@ -83,6 +84,12 @@ public class UserService implements UserDetailsService {
     public User addGender(UserGenderDto userGenderDto) {
         var person = findById(userGenderDto.getUserId());
         person.setGender(userGenderDto.getGender());
+        return userRepository.save(person);
+    }
+
+    public User changeName(UserChangeNameDto userChangeNameDto) {
+        var person = findById(userChangeNameDto.getUserId());
+        person.setName(userChangeNameDto.getName());
         return userRepository.save(person);
     }
 

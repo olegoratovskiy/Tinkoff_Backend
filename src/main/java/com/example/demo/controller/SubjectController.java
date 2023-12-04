@@ -54,7 +54,7 @@ public class SubjectController {
     }
 
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public void deleteById(@PathVariable @Valid Long id) {
         service.deleteSubject(id);
     }
