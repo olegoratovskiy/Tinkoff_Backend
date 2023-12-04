@@ -4,6 +4,7 @@ import com.example.demo.dto.request.JwtRequest;
 import com.example.demo.dto.request.RegistrationUserDto;
 import com.example.demo.service.AuthService;
 import com.example.demo.service.UserService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +17,7 @@ public class AuthController {
     private final AuthService authService;
     private final UserService userService;
 
+    @Transactional
     @PostMapping("/login")
     public ResponseEntity<?> createAuthToken(@RequestBody JwtRequest authRequest) {
         if (userService.checkForBan(authRequest.getUsername())) {
