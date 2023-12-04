@@ -1,9 +1,12 @@
 package com.example.demo.scheduler;
 
-import com.example.demo.repository.CommentRepository;
+import com.example.demo.entity.CronJob;
+import com.example.demo.repository.CronJobRepository;
 import com.example.demo.repository.PostRepository;
+import jakarta.persistence.EntityNotFoundException;
 import net.javacrumbs.shedlock.spring.annotation.SchedulerLock;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.scheduling.support.CronExpression;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,33 +15,29 @@ import java.time.LocalDateTime;
 @Component
 public class CleanUpTaskScheduler {
 
-    private final CommentRepository commentRepository;
+    private final CronJobRepository cronJobRepository;
     private final PostRepository postRepository;
 
-    public CleanUpTaskScheduler(CommentRepository commentRepository, PostRepository postRepository) {
-        this.commentRepository = commentRepository;
+    public CleanUpTaskScheduler(CronJobRepository cronJobRepository, PostRepository postRepository) {
+        this.cronJobRepository = cronJobRepository;
         this.postRepository = postRepository;
     }
 
     @Scheduled(cron = "*/30 * * * * *")
-    @SchedulerLock(name = "CleanUpTaskScheduler_scheduledTask")
-    public void scheduledTask() {
-        System.out.println("Hello, world");
-    }
-
-    @Scheduled(cron = "0 */15 * * * *")
-    @SchedulerLock(name = "CleanUpTaskScheduler_cleanUpComments")
-    @Transactional
-    public void cleanUpComments() {
-        LocalDateTime beforeLocalDateTime = LocalDateTime.now().minusYears(2);
-        commentRepository.deleteAllByCreatedAtBefore(beforeLocalDateTime);
-    }
-
-    @Scheduled(cron = "0 */15 * * * *")
     @SchedulerLock(name = "CleanUpTaskScheduler_cleanUpPosts")
     @Transactional
     public void cleanUpPosts() {
-        LocalDateTime beforeLocalDateTime = LocalDateTime.now().minusYears(2);
-        postRepository.deleteAllByCreatedAtBefore(beforeLocalDateTime);
+        CronJob cronJob = cronJobRepository.findById(1L).orElseThrow(EntityNotFoundException::new);
+        CronExpression cronExpression = CronExpression.parse(cronJob.getCron());
+        LocalDateTime startJobAfter = cronExpression.next(cronJob.getTriggeredAt());
+
+        if (LocalDateTime.now().isAfter(startJobAfter)) {
+            LocalDateTime beforeLocalDateTime = LocalDateTime.now().minusYears(2);
+            postRepository.deleteAllByCreatedAtBefore(beforeLocalDateTime);
+
+            cronJob.setTriggeredAt(LocalDateTime.now());
+            cronJobRepository.save(cronJob);
+        }
     }
+
 }
