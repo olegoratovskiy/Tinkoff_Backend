@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.request.UserChangeNameDto;
 import com.example.demo.dto.request.UserGenderDto;
 import com.example.demo.dto.response.FileResponseDto;
 import com.example.demo.dto.response.UserAccountResponseDto;
@@ -70,8 +71,15 @@ public class UserController {
     }
 
     @PostMapping("/gender/add")
-    public User addGender(@RequestBody UserGenderDto userGenderDto) {
-        return userService.addGender(userGenderDto);
+    public UserAccountResponseDto addGender(@RequestBody UserGenderDto userGenderDto) {
+        userService.addGender(userGenderDto);
+        return userService.getUserAccountById(userGenderDto.getUserId() );
+    }
+
+    @PostMapping("/name/change")
+    public UserAccountResponseDto addGender(@RequestBody UserChangeNameDto userChangeNameDto) {
+        userService.changeName(userChangeNameDto);
+        return userService.getUserAccountById(userChangeNameDto.getUserId() );
     }
 
 
