@@ -37,7 +37,7 @@ public class PostController {
         return postMapper.fromModelToDto(postService.getPost(id));
     }
 
-
+    @Transactional
     @PostMapping("/create")
     public PostResponseDto createPost(@RequestBody @Valid PostRequestDto postRequestDto) {
         Post model = postMapper.fromDtoToModel(postRequestDto);

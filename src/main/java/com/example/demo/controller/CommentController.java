@@ -28,7 +28,6 @@ public class CommentController {
     @PostMapping("/create")
     public CommentResponseDto createComment(@RequestBody @Valid CreateCommentRequestDto request) {
         String token = request.getToken();
-
         var createCommentModel = mapper.requestToEntity(request);
         var createdComment = commentService.createComment(createCommentModel, token);
 

@@ -22,7 +22,8 @@ public class CommentDtoMapper {
         return new CreateCommentModel(
                 request.getContent(),
                 request.getPostId(),
-                LocalDateTime.now()
+                LocalDateTime.now(),
+                request.getIsAnonymous()
         );
     }
 
@@ -32,7 +33,8 @@ public class CommentDtoMapper {
                 entity.getContent(),
                 userMapper.fromModelToAccountDto(entity.getAuthor()),
                 postMapper.fromModelToDto(entity.getPostId()),
-                entity.getCreatedAt()
+                entity.getCreatedAt(),
+                entity.isAnonymous()
 
 
         );

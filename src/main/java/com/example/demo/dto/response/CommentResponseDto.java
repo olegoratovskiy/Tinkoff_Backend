@@ -1,6 +1,5 @@
 package com.example.demo.dto.response;
 
-import com.example.demo.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -14,4 +13,5 @@ public class CommentResponseDto {
     UserAccountResponseDto author;
     PostResponseDto postId;
     LocalDateTime createdAt;
+    boolean isAnonymous;
 }

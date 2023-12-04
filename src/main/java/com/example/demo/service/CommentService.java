@@ -19,7 +19,10 @@ public class CommentService {
     private final JwtTokenUtils jwtTokenUtils;
 
 
-    public CommentService(CommentRepository commentRepository, PostRepository postRepository, UserService userService, JwtTokenUtils jwtTokenUtils) {
+    public CommentService(CommentRepository commentRepository,
+                          PostRepository postRepository,
+                          UserService userService,
+                          JwtTokenUtils jwtTokenUtils) {
         this.commentRepository = commentRepository;
         this.postRepository = postRepository;
         this.userService = userService;
@@ -34,8 +37,10 @@ public class CommentService {
         comment.setPostId(post);
         comment.setCreatedAt(model.getCreatedAt());
 
-        comment.setAuthor(userService.findByUserName(jwtTokenUtils.getUsername(token)).orElseThrow(RuntimeException::new));
-
+        comment.setAuthor(userService.findByUserName(
+                        jwtTokenUtils.getUsername(token))
+                .orElseThrow(RuntimeException::new));
+        comment.setAnonymous(Boolean.parseBoolean(model.getIsAnonymous()));
         return commentRepository.save(comment);
     }
 
