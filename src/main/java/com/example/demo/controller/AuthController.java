@@ -11,12 +11,12 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin(origins = "*")
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/log")
+@RequestMapping("/auth")
 public class AuthController {
     private final AuthService authService;
     private final UserService userService;
 
-    @PostMapping("/auth")
+    @PostMapping("/login")
     public ResponseEntity<?> createAuthToken(@RequestBody JwtRequest authRequest) {
         if (userService.checkForBan(authRequest.getUsername())) {
             throw new RuntimeException();
@@ -24,7 +24,7 @@ public class AuthController {
         return authService.createAuthToken(authRequest);
     }
 
-    @PostMapping("/registration")
+    @PostMapping("/register")
     public ResponseEntity<?> createNewUser(@RequestBody RegistrationUserDto registrationUserDto) {
         return authService.createNewUser(registrationUserDto);
     }

@@ -32,9 +32,9 @@ public class CommentController {
     }
 
     @Transactional
-    @GetMapping("/{postId}")
+    @GetMapping("/get")
     public CommentsResponseDto getComments(
-            @PathVariable long postId,
+            @RequestParam long postId,
             @RequestParam int pageNumber,
             @RequestParam int pageSize
     ) {

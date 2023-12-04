@@ -27,13 +27,13 @@ public class FileController {
         this.mapper = mapper;
     }
 
-    @PostMapping(value = "save", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    @PostMapping(value = "/save", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public FileResponseDto saveFile(@RequestPart MultipartFile request, long postId) throws IOException {
         var savedFile = fileService.saveFile(request.getBytes(), postId);
         return mapper.entityToResponse(savedFile);
     }
 
-    @GetMapping("/{fileId}")
+    @GetMapping("/get/{fileId}")
     public FileResponseDto getFile(@PathVariable long fileId) {
         return mapper.entityToResponse(fileService.getFile(fileId));
     }
