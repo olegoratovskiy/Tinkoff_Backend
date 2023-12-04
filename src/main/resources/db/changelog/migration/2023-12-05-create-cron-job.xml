@@ -1,0 +1,26 @@
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <changeSet id="2023-12-05-create-shedlock" author="Oleg Oratovskiy">
+        <preConditions>
+            <not>
+                <tableExists tableName="cron_job"/>
+            </not>
+        </preConditions>
+        <createTable tableName="cron_job">
+            <column name="id" type="serial" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="cron" type="varchar(255)" defaultValue="null"/>
+            <column name="triggered_at" type="timestamp(3)" defaultValue="null"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="2023-12-05-insert-data-into-cron-job" author="Oleg Oratovskiy">
+        <sql>
+            insert into cron_job (cron, triggered_at)
+            VALUES ('0 */15 * * * *', '2023-12-05 00:00:00.000');
+        </sql>
+    </changeSet>
+</databaseChangeLog>
