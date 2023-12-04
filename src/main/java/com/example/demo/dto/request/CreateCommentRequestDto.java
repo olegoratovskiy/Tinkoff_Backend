@@ -10,4 +10,5 @@ public class CreateCommentRequestDto {
     @NotNull
     String content;
     int postId;
+    String token;
 }

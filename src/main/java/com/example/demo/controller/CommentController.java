@@ -24,10 +24,14 @@ public class CommentController {
         this.mapper = mapper;
     }
 
+    @Transactional
     @PostMapping("/create")
     public CommentResponseDto createComment(@RequestBody @Valid CreateCommentRequestDto request) {
+        String token = request.getToken();
+
         var createCommentModel = mapper.requestToEntity(request);
-        var createdComment = commentService.createComment(createCommentModel);
+        var createdComment = commentService.createComment(createCommentModel, token);
+
         return mapper.entityToResponse(createdComment);
     }
 
