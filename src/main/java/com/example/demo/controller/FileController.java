@@ -33,8 +33,8 @@ public class FileController {
     }
 
     @PutMapping(value = "/update", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-    public FileResponseDto updateFile(@RequestPart MultipartFile request,long fileId) throws IOException{
-        var updateFile =  fileService.updateFile(request.getBytes(),fileId);
+    public FileResponseDto updateFile(@RequestPart MultipartFile request, long fileId) throws IOException {
+        var updateFile = fileService.updateFile(request.getBytes(), fileId);
         return mapper.entityToResponse(updateFile);
     }
 }

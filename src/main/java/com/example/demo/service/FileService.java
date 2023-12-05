@@ -39,7 +39,7 @@ public class FileService {
         return fileRepository.save(file);
     }
 
-    public File updateFile(byte[] bytes,long fileId){
+    public File updateFile(byte[] bytes, long fileId) {
         var file = getFile(fileId);
         file.setContent(bytes);
         return fileRepository.save(file);

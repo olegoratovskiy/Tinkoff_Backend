@@ -4,7 +4,6 @@ import com.example.demo.dto.request.CreateCommentRequestDto;
 import com.example.demo.dto.response.CommentResponseDto;
 import com.example.demo.dto.response.CommentsResponseDto;
 import com.example.demo.dto.response.PageInfoResponse;
-import com.example.demo.dto.response.PostResponseDto;
 import com.example.demo.entity.Comment;
 import com.example.demo.mapper.CommentDtoMapper;
 import com.example.demo.service.CommentService;
