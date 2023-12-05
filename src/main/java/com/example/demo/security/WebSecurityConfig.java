@@ -73,6 +73,8 @@ public class WebSecurityConfig {
                                 .requestMatchers("/year/**").authenticated()
                                 .requestMatchers("/subjects/**").authenticated()
                                 .requestMatchers("/works/**").authenticated()
+                                .requestMatchers("/posts/get/all").hasRole("ADMIN")
+                                .requestMatchers("/comments/get/all").hasRole("ADMIN")
                                 .requestMatchers("/posts/delete/**").hasRole("ADMIN")
                                 .requestMatchers("/comments/delete/**").hasRole("ADMIN")
                                 .requestMatchers("/users/ban/**").hasRole("ADMIN")

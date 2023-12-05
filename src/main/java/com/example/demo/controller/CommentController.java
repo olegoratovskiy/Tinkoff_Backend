@@ -4,6 +4,7 @@ import com.example.demo.dto.request.CreateCommentRequestDto;
 import com.example.demo.dto.response.CommentResponseDto;
 import com.example.demo.dto.response.CommentsResponseDto;
 import com.example.demo.dto.response.PageInfoResponse;
+import com.example.demo.dto.response.PostResponseDto;
 import com.example.demo.entity.Comment;
 import com.example.demo.mapper.CommentDtoMapper;
 import com.example.demo.service.CommentService;
@@ -11,6 +12,8 @@ import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -35,6 +38,14 @@ public class CommentController {
     }
 
     @Transactional
+    @GetMapping("/get/all")
+    public List<CommentResponseDto> getAllComments() {
+        return commentService.getAllComments().stream()
+                .map(mapper::entityToResponse)
+                .toList();
+    }
+
+    @Transactional
     @GetMapping("/get")
     public CommentsResponseDto getComments(
             @RequestParam long postId,
@@ -52,5 +63,10 @@ public class CommentController {
                 comments.getContent().stream().map(mapper::entityToResponse).toList(),
                 pageInfo
         );
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public void deleteComment(@PathVariable @Valid Long id) {
+        commentService.deleteComment(id);
     }
 }
