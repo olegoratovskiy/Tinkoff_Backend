@@ -10,6 +10,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 public class CommentService {
@@ -51,9 +54,18 @@ public class CommentService {
         );
     }
 
+    public List<Comment> getAllComments() {
+        return commentRepository.findAll();
+    }
+
     private Post getPostByIdOrThrow(long id) {
         return postRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("No post with id: " + id)
         );
+    }
+
+    @Transactional
+    public void deleteComment(Long id) {
+        commentRepository.deleteById(id);
     }
 }
