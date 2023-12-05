@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import com.example.demo.config.PasswordEncoderConfiguration;
 import com.example.demo.dto.request.RegistrationUserDto;
+import com.example.demo.dto.request.UserChangeNameDto;
 import com.example.demo.dto.request.UserGenderDto;
 import com.example.demo.dto.response.UserAccountResponseDto;
 import com.example.demo.entity.User;
@@ -64,7 +65,7 @@ public class UserService implements UserDetailsService {
     }
 
     @Transactional
-    public void unbanUser(long id) {
+    public void unbanUser(Long id) {
         var user = findById(id);
         user.setBanned(false);
         userRepository.save(user);
@@ -76,6 +77,8 @@ public class UserService implements UserDetailsService {
         user.setPassword(passwordEncoder.passwordEncoder().encode(registrationUserDto.getPassword()));
         user.setRoles(List.of(roleService.getUserRole()));
         user.setGender(registrationUserDto.getGender());
+        user.setRole("ADMIN");
+        user.setEmail(registrationUserDto.getEmail());
         return userRepository.save(user);
 
     }
@@ -86,6 +89,12 @@ public class UserService implements UserDetailsService {
         return userRepository.save(person);
     }
 
+    public User changeName(UserChangeNameDto userChangeNameDto) {
+        var person = findById(userChangeNameDto.getUserId());
+        person.setName(userChangeNameDto.getName());
+        return userRepository.save(person);
+    }
+
     public UserAccountResponseDto getUserAccountById(long id) {
         var user = findById(id);
         UserAccountResponseDto res = new UserAccountResponseDto();
@@ -93,6 +102,7 @@ public class UserService implements UserDetailsService {
         res.setName(user.getName());
         res.setRole(user.getRole());
         res.setGender(user.getGender());
+        res.setEmail(user.getEmail());
 
         return res;
     }

@@ -12,6 +12,8 @@ import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/comments")
@@ -24,17 +26,28 @@ public class CommentController {
         this.mapper = mapper;
     }
 
+    @Transactional
     @PostMapping("/create")
     public CommentResponseDto createComment(@RequestBody @Valid CreateCommentRequestDto request) {
+        String token = request.getToken();
         var createCommentModel = mapper.requestToEntity(request);
-        var createdComment = commentService.createComment(createCommentModel);
+        var createdComment = commentService.createComment(createCommentModel, token);
+
         return mapper.entityToResponse(createdComment);
     }
 
     @Transactional
-    @GetMapping("/{postId}")
+    @GetMapping("/get/all")
+    public List<CommentResponseDto> getAllComments() {
+        return commentService.getAllComments().stream()
+                .map(mapper::entityToResponse)
+                .toList();
+    }
+
+    @Transactional
+    @GetMapping("/get")
     public CommentsResponseDto getComments(
-            @PathVariable long postId,
+            @RequestParam long postId,
             @RequestParam int pageNumber,
             @RequestParam int pageSize
     ) {
@@ -49,5 +62,10 @@ public class CommentController {
                 comments.getContent().stream().map(mapper::entityToResponse).toList(),
                 pageInfo
         );
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public void deleteComment(@PathVariable @Valid Long id) {
+        commentService.deleteComment(id);
     }
 }

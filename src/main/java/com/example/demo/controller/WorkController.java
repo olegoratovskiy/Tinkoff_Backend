@@ -20,12 +20,7 @@ public class WorkController {
     private WorkService workService;
     private WorkMapper workMapper;
 
-    @GetMapping("/find/{id}")
-    public WorkResponseDto getWorkById(@PathVariable @Valid Long id) {
-        return workMapper.fromModelToDto(workService.getWorkById(id));
-    }
-
-    @GetMapping("/find_all")
+    @GetMapping("/get/all")
     public List<WorkResponseDto> getAllYears() {
         List<WorkResponseDto> list = new ArrayList<>();
         List<Work> postList = workService.getAllWork();
@@ -35,10 +30,17 @@ public class WorkController {
         return list;
     }
 
-    @GetMapping("/find_all_by_sub_id/{id}")
-    public List<WorkResponseDto> getAllWorks(@PathVariable @Valid Long id) {
+    @GetMapping("/get/{id}")
+    public WorkResponseDto getWorkById(@PathVariable @Valid Long id) {
+        return workMapper.fromModelToDto(workService.getWorkById(id));
+    }
+
+
+
+    @GetMapping("/get")
+    public List<WorkResponseDto> getAllWorks(@RequestParam @Valid Long subjectId) {
         List<WorkResponseDto> list = new ArrayList<>();
-        List<Work> worksList = workService.getAllWorksBySubId(id);
+        List<Work> worksList = workService.getAllWorksBySubId(subjectId);
         for (Work work : worksList) {
             list.add(workMapper.fromModelToDto(work));
         }

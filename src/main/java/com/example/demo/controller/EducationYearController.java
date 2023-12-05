@@ -19,7 +19,7 @@ public class EducationYearController {
     private EducationYearMapper educationYearMapper;
     private EducationYearService educationYearService;
 
-    @GetMapping("/find_all")
+    @GetMapping("/get/all")
     public List<EducationYearResponseDto> getAllYears() {
         List<EducationYearResponseDto> list = new ArrayList<>();
         List<EducationYear> educationYearList = educationYearService.getAllEducationYear();
@@ -29,7 +29,7 @@ public class EducationYearController {
         return list;
     }
 
-    @GetMapping("/find/{id}")
+    @GetMapping("/get/{id}")
     public EducationYearResponseDto getEducationYearById(@PathVariable @Valid Long id) {
         return educationYearMapper.fromModelToDto(educationYearService.getEducationYear(id));
     }

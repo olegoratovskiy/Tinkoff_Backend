@@ -1,10 +1,10 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.request.UserChangeNameDto;
 import com.example.demo.dto.request.UserGenderDto;
 import com.example.demo.dto.response.FileResponseDto;
 import com.example.demo.dto.response.UserAccountResponseDto;
 import com.example.demo.dto.response.UserResponseDto;
-import com.example.demo.entity.User;
 import com.example.demo.exceptions.handlers.UserNotFoundError;
 import com.example.demo.mapper.FileDtoMapper;
 import com.example.demo.mapper.UserMapper;
@@ -30,12 +30,12 @@ public class UserController {
     private final FileDtoMapper photoMapper;
     private final FileDtoMapper mapper;
 
-    @GetMapping("/find_user_by_id/{id}")
-    public String getUserNameById(@PathVariable @Valid Long id) {
-        return userService.findById(id).getName();
+    @GetMapping("/get/{id}")
+    public UserAccountResponseDto getUserNameById(@PathVariable @Valid Long id) {
+        return userService.getUserAccountById(id);
     }
 
-    @GetMapping("/find_all_users")
+    @GetMapping("/get/all")
     public List<UserResponseDto> getAllUser() {
         return userService.getAllUsers()
                 .stream()
@@ -43,49 +43,43 @@ public class UserController {
                 .toList();
     }
 
-    @DeleteMapping("/ban/{id}")
-    public void banById(@PathVariable @Valid Long id) {
-        userService.deleteUser(id);
+    @GetMapping("/get")
+    public Long getIdByUsername(@RequestParam String username) throws UserNotFoundError {
+        return userService.getUserByName(username);
     }
 
-    @PostMapping("/unban/{id}")
-    public void unbanById(@PathVariable @Valid Long id) {
-        userService.unbanUser(id);
+    @DeleteMapping("/ban/{userId}")
+    public void banById(@PathVariable @Valid Long userId) {
+        userService.deleteUser(userId);
     }
 
-    @PostMapping(value = "/save", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
-    public FileResponseDto saveFile(@RequestPart MultipartFile request, long postId) throws IOException {
-        var savedFile = fileService.savePhoto(request.getBytes(), postId);
+    @PostMapping("/unban/{userId}")
+    public void unbanById(@PathVariable @Valid Long userId) {
+        userService.unbanUser(userId);
+    }
+
+    @PostMapping(value = "/photo/add", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    public FileResponseDto saveFile(@RequestPart MultipartFile request, Long userId) throws IOException {
+        var savedFile = fileService.savePhoto(request.getBytes(), userId);
         return mapper.entityToResponse(savedFile.getPhoto());
     }
 
-    @GetMapping("/get_photo/{id}")
-    public FileResponseDto getUserPhoto(@PathVariable("id") Long id) {
-        return photoMapper.entityToResponse(fileService.getPhoto(id));
+    @GetMapping("/photo/get")
+    public FileResponseDto getUserPhoto(@RequestParam Long userId) {
+        return photoMapper.entityToResponse(fileService.getPhoto(userId));
     }
 
-    @PostMapping("/add_gender")
-    public User addGender(@RequestBody UserGenderDto userGenderDto) {
-        return userService.addGender(userGenderDto);
+    @PostMapping("/gender/add")
+    public UserAccountResponseDto addGender(@RequestBody UserGenderDto userGenderDto) {
+        userService.addGender(userGenderDto);
+        return userService.getUserAccountById(userGenderDto.getUserId());
     }
 
-    @GetMapping("/get_user/{userId}")
-    public String getNameByUserId(@PathVariable("userId") Long id) {
-        return userService.findById(id).getName();
+    @PostMapping("/name/change")
+    public UserAccountResponseDto addGender(@RequestBody UserChangeNameDto userChangeNameDto) {
+        userService.changeName(userChangeNameDto);
+        return userService.getUserAccountById(userChangeNameDto.getUserId());
     }
 
-    @GetMapping("/get_gender/{userId}")
-    public String getGenderByUserId(@PathVariable("userId") long id) {
-        return userService.findById(id).getGender();
-    }
 
-    @GetMapping("/get_cabinet/{userId}")
-    public UserAccountResponseDto getUserAccount(@PathVariable("userId") Long id) {
-        return userService.getUserAccountById(id);
-    }
-
-    @GetMapping("/get_username/{username}")
-    public Long getIdByUsername(@PathVariable String username) throws UserNotFoundError {
-        return userService.getUserByName(username);
-    }
 }

@@ -1,5 +1,6 @@
 package com.example.demo.dto.request;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,4 +11,7 @@ public class CreateCommentRequestDto {
     @NotNull
     String content;
     int postId;
+    String token;
+    @JsonProperty
+    boolean isAnonymous;
 }

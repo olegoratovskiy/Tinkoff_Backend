@@ -10,6 +10,8 @@ import java.time.LocalDateTime;
 public class CommentResponseDto {
     Long id;
     String content;
+    UserAccountResponseDto author;
     PostResponseDto postId;
     LocalDateTime createdAt;
+    boolean isAnonymous;
 }

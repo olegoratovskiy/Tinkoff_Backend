@@ -11,16 +11,19 @@ import java.time.LocalDateTime;
 @Component
 public class CommentDtoMapper {
     private final PostMapper postMapper;
+    private final UserMapper userMapper;
 
-    public CommentDtoMapper(PostMapper postMapper) {
+    public CommentDtoMapper(PostMapper postMapper, UserMapper userMapper) {
         this.postMapper = postMapper;
+        this.userMapper = userMapper;
     }
 
     public CreateCommentModel requestToEntity(CreateCommentRequestDto request) {
         return new CreateCommentModel(
                 request.getContent(),
                 request.getPostId(),
-                LocalDateTime.now()
+                LocalDateTime.now(),
+                request.isAnonymous()
         );
     }
 
@@ -28,8 +31,12 @@ public class CommentDtoMapper {
         return new CommentResponseDto(
                 entity.getId(),
                 entity.getContent(),
+                userMapper.fromModelToAccountDto(entity.getAuthor()),
                 postMapper.fromModelToDto(entity.getPostId()),
-                entity.getCreatedAt()
+                entity.getCreatedAt(),
+                entity.isAnonymous()
+
+
         );
     }
 }

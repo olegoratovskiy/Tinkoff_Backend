@@ -11,4 +11,5 @@ public class UserResponseDto {
     private String password;
     private boolean isBanned;
     private String gender;
+    private String email;
 }

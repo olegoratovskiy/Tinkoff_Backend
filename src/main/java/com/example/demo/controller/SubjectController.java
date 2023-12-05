@@ -28,12 +28,7 @@ public class SubjectController {
         return subjectMapper.fromModelToDto(service.createSubject(model, yearId));
     }
 
-    @GetMapping("/find/{id}")
-    public SubjectResponseDto getSubject(@PathVariable @Valid Long id) {
-        return subjectMapper.fromModelToDto(service.getSubject(id));
-    }
-
-    @GetMapping("/find_all")
+    @GetMapping("/get/all")
     public List<SubjectResponseDto> getAllYears() {
         List<SubjectResponseDto> list = new ArrayList<>();
         List<Subject> postList = service.getAllSubject();
@@ -43,17 +38,23 @@ public class SubjectController {
         return list;
     }
 
-    @GetMapping("/find_all_by_year_id/{id}")
-    public List<SubjectResponseDto> getAllSubject(@PathVariable @Valid Long id) {
+    @GetMapping("/get/{id}")
+    public SubjectResponseDto getSubject(@PathVariable @Valid Long id) {
+        return subjectMapper.fromModelToDto(service.getSubject(id));
+    }
+
+    @GetMapping("/get")
+    public List<SubjectResponseDto> getAllSubject(@RequestParam @Valid Long yearId) {
         List<SubjectResponseDto> list = new ArrayList<>();
-        List<Subject> subjects = service.getAllByYearId(id);
+        List<Subject> subjects = service.getAllByYearId(yearId);
         for (Subject subject : subjects) {
             list.add(subjectMapper.fromModelToDto(subject));
         }
         return list;
     }
 
-    @DeleteMapping("/{id}")
+
+    @DeleteMapping("/delete/{id}")
     public void deleteById(@PathVariable @Valid Long id) {
         service.deleteSubject(id);
     }

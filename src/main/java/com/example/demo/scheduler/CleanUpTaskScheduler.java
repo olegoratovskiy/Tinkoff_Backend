@@ -23,7 +23,7 @@ public class CleanUpTaskScheduler {
         this.postRepository = postRepository;
     }
 
-    @Scheduled(cron = "*/30 * * * * *")
+    @Scheduled(cron = "*/8 * * * * *")
     @SchedulerLock(name = "CleanUpTaskScheduler_cleanUpPosts")
     @Transactional
     public void cleanUpPosts() {
@@ -34,7 +34,7 @@ public class CleanUpTaskScheduler {
         if (LocalDateTime.now().isAfter(startJobAfter)) {
             LocalDateTime beforeLocalDateTime = LocalDateTime.now().minusYears(2);
             postRepository.deleteAllByCreatedAtBefore(beforeLocalDateTime);
-
+            System.out.println("Success");
             cronJob.setTriggeredAt(LocalDateTime.now());
             cronJobRepository.save(cronJob);
         }

@@ -2,8 +2,10 @@ package com.example.demo.controller;
 
 import com.example.demo.dto.request.JwtRequest;
 import com.example.demo.dto.request.RegistrationUserDto;
+import com.example.demo.exceptions.BannedUserException;
 import com.example.demo.service.AuthService;
 import com.example.demo.service.UserService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,20 +13,21 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin(origins = "*")
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/log")
+@RequestMapping("/auth")
 public class AuthController {
     private final AuthService authService;
     private final UserService userService;
 
-    @PostMapping("/auth")
+    @Transactional
+    @PostMapping("/login")
     public ResponseEntity<?> createAuthToken(@RequestBody JwtRequest authRequest) {
         if (userService.checkForBan(authRequest.getUsername())) {
-            throw new RuntimeException();
+            throw new BannedUserException("вы забанены");
         }
         return authService.createAuthToken(authRequest);
     }
 
-    @PostMapping("/registration")
+    @PostMapping("/register")
     public ResponseEntity<?> createNewUser(@RequestBody RegistrationUserDto registrationUserDto) {
         return authService.createNewUser(registrationUserDto);
     }
