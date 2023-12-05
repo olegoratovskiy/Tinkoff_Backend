@@ -77,7 +77,7 @@ public class UserService implements UserDetailsService {
         user.setPassword(passwordEncoder.passwordEncoder().encode(registrationUserDto.getPassword()));
         user.setRoles(List.of(roleService.getUserRole()));
         user.setGender(registrationUserDto.getGender());
-        user.setRole("Admin");
+        user.setRole("ADMIN");
         user.setEmail(registrationUserDto.getEmail());
         return userRepository.save(user);
 
@@ -102,6 +102,7 @@ public class UserService implements UserDetailsService {
         res.setName(user.getName());
         res.setRole(user.getRole());
         res.setGender(user.getGender());
+        res.setEmail(user.getEmail());
 
         return res;
     }

@@ -12,6 +12,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -52,6 +53,7 @@ public class PostService {
         post.setWorkId(workService.getWorkById(workId));
         post.setUserId(userService.findByUserName(jwtTokenUtils.getUsername(token))
                 .orElseThrow(RuntimeException::new));
+        post.setCreatedAt(LocalDateTime.now());
         return postRepository.save(post);
     }
 

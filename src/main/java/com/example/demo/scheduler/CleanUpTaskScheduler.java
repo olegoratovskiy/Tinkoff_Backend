@@ -32,8 +32,7 @@ public class CleanUpTaskScheduler {
         LocalDateTime startJobAfter = cronExpression.next(cronJob.getTriggeredAt());
 
         if (LocalDateTime.now().isAfter(startJobAfter)) {
-            LocalDateTime beforeLocalDateTime = LocalDateTime.now().minusYears(2);
-            postRepository.deleteAllByCreatedAtBefore(beforeLocalDateTime);
+            postRepository.deleteAllByCreatedAtBefore(LocalDateTime.now());
 
             cronJob.setTriggeredAt(LocalDateTime.now());
             cronJobRepository.save(cronJob);
