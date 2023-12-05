@@ -20,7 +20,7 @@
     <changeSet id="2023-12-05-insert-data-into-cron-job" author="Oleg Oratovskiy">
         <sql>
             insert into cron_job (cron, triggered_at)
-            VALUES ('0 */15 * * * *', '2023-12-05 00:00:00.000');
+            VALUES ('0 */1440 * * * *', '2023-12-05 00:00:00.000');
         </sql>
     </changeSet>
 </databaseChangeLog>
