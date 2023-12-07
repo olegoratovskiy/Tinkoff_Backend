@@ -8,10 +8,11 @@
     <include file="db/changelog/migration/2023-11-19-create-work-ref.xml"/>
     <include file="db/changelog/migration/2023-11-22-create-user.xml"/>
     <include file="db/changelog/migration/2023-11-19-create-post-ref.xml"/>
-    <include file="db/changelog/migration/2023-11-19-create_file-jn.xml"/>
-    <include file="db/changelog/migration/2023-11-19-create-comment-jn.xml"/>
     <include file="db/changelog/migration/2023-29-11-create-roles-jn.xml"/>
     <include file="db/changelog/migration/2023-11-29-create-user-roles-ref.xml"/>
     <include file="db/changelog/migration/2023-12-02-create-shedlock.xml"/>
     <include file="db/changelog/migration/2023-12-05-create-cron-job.xml"/>
+    <include file="db/changelog/migration/2023-12-07-create-news-panel.xml"/>
+    <include file="db/changelog/migration/2023-11-19-create-comment-jn.xml"/>
+    <include file="db/changelog/migration/2023-11-19-create_file-jn.xml"/>
 </databaseChangeLog>
