@@ -16,6 +16,12 @@
             <column name="name" type="varchar(255)"/>
         </createTable>
         <sql>
+            insert into roles_jn (name)
+            VALUES ('ROLE_USER');
+            insert into roles_jn (name)
+            VALUES ('ROLE_ADMIN');
+        </sql>
+        <sql>
             alter table roles_jn
                 add constraint name_length_check check ( length(name) > 0 );
         </sql>

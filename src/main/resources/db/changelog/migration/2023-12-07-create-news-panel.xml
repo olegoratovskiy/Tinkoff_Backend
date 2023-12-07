@@ -1,0 +1,28 @@
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <changeSet id="2023-12-07-v1-create-news-panel-ref" author="Sergey Andreychikov">
+        <preConditions>
+            <not>
+                <tableExists tableName="news_panel_ref"/>
+            </not>
+        </preConditions>
+        <createTable tableName="news_panel_ref">
+            <column name="id" type="serial" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="title" type="varchar(255)" defaultValue="null"/>
+            <column name="user_id" type="bigint" defaultValue="null">
+                <constraints foreignKeyName="fk_user_user_jn_id" references="user_jn(id)"/>
+            </column>
+            <column name="description" type="text" defaultValue="null"/>
+            <column name="created_at" type="varchar(255)" defaultValue="null"/>
+        </createTable>
+        <sql>
+            alter table news_panel_ref
+                add constraint name_length_check check ( length(title) > 0 );
+        </sql>
+    </changeSet>
+</databaseChangeLog>

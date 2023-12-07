@@ -25,6 +25,10 @@ public class Comment {
     @JoinColumn(name = "user_id")
     private User author;
 
+    @ManyToOne
+    @JoinColumn(name = "news_id")
+    private News news;
+
     @Column(name = "created_at")
     private LocalDateTime createdAt;
     @Column(name = "is_anonymous")

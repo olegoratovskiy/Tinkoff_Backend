@@ -16,8 +16,11 @@
             <column name="post_id" type="bigint" defaultValue="null">
                 <constraints foreignKeyName="fk_post_file_ref_id" references="post_ref(id)"/>
             </column>
+            <column name="news_id" type="bigint" defaultValue="null">
+                <constraints foreignKeyName="fk_news_file_ref_id" references="post_ref(id)"/>
+            </column>
             <column name = "photo_id" type = "bigint" defaultValue="null">
-                <constraints foreignKeyName="fk_photo_file_ref_id" references="user_jn(id)"/>
+                <constraints foreignKeyName="fk_photo_file_ref_id" references="news_panel_ref(id)"/>
             </column>
             <column name="file_content" type="blob"/>
             <column name="file_type" type="varchar(255)"/>
