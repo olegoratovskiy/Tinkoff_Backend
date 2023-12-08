@@ -85,7 +85,11 @@ class CommentServiceTest {
         when(postRepositoryMock.findById(eq(1L))).thenReturn(Optional.of(mockPost));
 
 
-        CommentService commentService = new CommentService(commentRepositoryMock, postRepositoryMock, userServiceMock, jwtTokenUtilsMock);
+        CommentService commentService = new CommentService(
+                commentRepositoryMock,
+                postRepositoryMock,
+                userServiceMock,
+                jwtTokenUtilsMock);
 
         Comment createdComment = commentService.createComment(mockModel, mockToken);
 

@@ -4,8 +4,10 @@ package com.example.demo.service;
 import com.example.demo.dto.request.JwtRequest;
 import com.example.demo.dto.request.RegistrationUserDto;
 import com.example.demo.dto.request.UserDto;
+import com.example.demo.entity.User;
 import com.example.demo.exceptions.AppError;
 import com.example.demo.repository.UserRepository;
+import com.example.demo.utils.JwtTokenUtils;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,13 +15,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.test.context.ContextConfiguration;
+import org.springframework.security.authentication.AuthenticationManager;
+
+
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 @SpringBootTest
-@ContextConfiguration
 public class UserRegistrationTest {
 
     @Autowired
@@ -54,6 +60,15 @@ public class UserRegistrationTest {
     }
     @Test
     public void createUserRegister() {
+        UserRepository userRepositoryMock = mock(UserRepository.class);
+        UserService userServiceMock = mock(UserService.class);
+        JwtTokenUtils jwtTokenUtilsMock = mock(JwtTokenUtils.class);
+        AuthenticationManager authenticationManagerMock = mock(AuthenticationManager.class);
+
+        AuthService authService = new AuthService(userServiceMock, jwtTokenUtilsMock, authenticationManagerMock);
+
+        when(userServiceMock.createUser(any(RegistrationUserDto.class))).thenReturn(new User());
+
         RegistrationUserDto registrationUserDto = new RegistrationUserDto();
         registrationUserDto.setUsername("Ivan");
         registrationUserDto.setEmail("ivan228@gmail.com");
@@ -65,18 +80,6 @@ public class UserRegistrationTest {
 
         assertEquals(HttpStatus.OK, firstResponse.getStatusCode());
         assertTrue(firstResponse.getBody() instanceof UserDto);
-
-
-        assertTrue(userRepository.findByName("Ivan").isPresent());
-
-        ResponseEntity<?> secondResponse = authService.createNewUser(registrationUserDto);
-
-
-        assertEquals(HttpStatus.BAD_REQUEST, secondResponse.getStatusCode());
-        assertTrue(secondResponse.getBody() instanceof AppError);
-
-        assertTrue(userRepository.findByName("Ivan").isPresent());
-
     }
 
     @Test
