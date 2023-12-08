@@ -5,10 +5,8 @@ import com.example.demo.dto.request.RegistrationUserDto;
 import com.example.demo.dto.request.UserChangeNameDto;
 import com.example.demo.dto.request.UserGenderDto;
 import com.example.demo.dto.response.UserAccountResponseDto;
-import com.example.demo.entity.Role;
 import com.example.demo.entity.User;
 import com.example.demo.exceptions.handlers.UserNotFoundError;
-import com.example.demo.repository.RoleRepository;
 import com.example.demo.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -19,7 +17,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
