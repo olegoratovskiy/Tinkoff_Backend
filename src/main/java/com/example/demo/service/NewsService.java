@@ -31,9 +31,12 @@ public class NewsService {
     }
 
     @Transactional
-    public News update(News news, long id) {
+    public News update(News news, long id,String token) {
         var newsToUpdate = newsRepository.findById(id).get();
         newsMapper.update(newsToUpdate, news);
+        newsToUpdate.setCreatedAt(LocalDateTime.now());
+        newsToUpdate.setUserId(userService.findByUserName(jwtTokenUtils.getUsername(token))
+                .orElseThrow(RuntimeException::new));
         return newsRepository.save(newsToUpdate);
     }
 

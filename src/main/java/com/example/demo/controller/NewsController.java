@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.dto.request.NewsRequestDto;
+import com.example.demo.dto.request.NewsRequestUpdateDto;
 import com.example.demo.dto.response.NewsResponseDto;
 import com.example.demo.mapper.NewsMapper;
 import com.example.demo.service.NewsService;
@@ -32,9 +33,10 @@ public class NewsController {
     }
 
     @PutMapping("/update")
-    public NewsResponseDto updateNews(@RequestBody NewsRequestDto newsRequestDto, long idNews) {
+    public NewsResponseDto updateNews(@RequestBody NewsRequestUpdateDto newsRequestDto) {
+        var newNews = newsMapper.fromDtoUpdateToModel(newsRequestDto);
         return newsMapper.fromModelToDto(newsService
-                .update(newsMapper.fromDtoToModel(newsRequestDto), idNews));
+                .update(newNews, newNews.getId(),newsRequestDto.getToken()));
 
     }
 

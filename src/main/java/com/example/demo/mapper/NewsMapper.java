@@ -1,6 +1,7 @@
 package com.example.demo.mapper;
 
 import com.example.demo.dto.request.NewsRequestDto;
+import com.example.demo.dto.request.NewsRequestUpdateDto;
 import com.example.demo.dto.response.NewsResponseDto;
 import com.example.demo.entity.News;
 import org.mapstruct.Mapper;
@@ -11,6 +12,8 @@ public interface NewsMapper {
     NewsResponseDto fromModelToDto(News news);
 
     News fromDtoToModel(NewsRequestDto newsRequestDto);
+
+    News fromDtoUpdateToModel(NewsRequestUpdateDto newsRequestUpdateDto);
 
     void update(@MappingTarget News newsToUpdate, News news);
 }
