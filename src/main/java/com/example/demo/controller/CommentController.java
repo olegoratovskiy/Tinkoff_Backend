@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.dto.request.CreateCommentRequestDto;
+import com.example.demo.dto.request.UpdateCommentRequestDto;
 import com.example.demo.dto.response.*;
 import com.example.demo.entity.Comment;
 import com.example.demo.mapper.CommentDtoMapper;
@@ -32,6 +33,13 @@ public class CommentController {
         var createdComment = commentService.createComment(createCommentModel, token);
 
         return mapper.entityToResponse(createdComment);
+    }
+
+    @PostMapping("/update")
+    public CommentResponseDto updateComment(@RequestBody @Valid UpdateCommentRequestDto request) {
+        var updateCommentModel = mapper.requestToModel(request);
+        var updatedComment = commentService.updateComment(updateCommentModel);
+        return mapper.entityToResponse(updatedComment);
     }
 
     @Transactional

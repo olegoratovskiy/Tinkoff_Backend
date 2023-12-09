@@ -1,10 +1,12 @@
 package com.example.demo.mapper;
 
 import com.example.demo.dto.request.CreateCommentRequestDto;
+import com.example.demo.dto.request.UpdateCommentRequestDto;
 import com.example.demo.dto.response.CommentResponseDto;
 import com.example.demo.dto.response.CommentResponseForNewsDto;
 import com.example.demo.entity.Comment;
 import com.example.demo.model.CreateCommentModel;
+import com.example.demo.model.UpdateCommentModel;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -31,6 +33,15 @@ public class CommentDtoMapper {
         );
     }
 
+    public UpdateCommentModel requestToModel(UpdateCommentRequestDto request) {
+        return new UpdateCommentModel(
+                request.getContent(),
+                request.getCommentId(),
+                request.getToken(),
+                LocalDateTime.now()
+        );
+    }
+
     public CommentResponseDto entityToResponse(Comment entity) {
         return new CommentResponseDto(
                 entity.getId(),
@@ -38,9 +49,8 @@ public class CommentDtoMapper {
                 userMapper.fromModelToAccountDto(entity.getAuthor()),
                 postMapper.fromModelToDto(entity.getPostId()),
                 entity.getCreatedAt(),
+                entity.getChangedAt(),
                 entity.isAnonymous()
-
-
         );
     }
 

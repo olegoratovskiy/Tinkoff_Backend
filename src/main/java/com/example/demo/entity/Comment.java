@@ -31,6 +31,8 @@ public class Comment {
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
+    @Column(name = "changed_at")
+    private LocalDateTime changedAt;
     @Column(name = "is_anonymous")
     private boolean isAnonymous;
 

@@ -13,5 +13,6 @@ public class CommentResponseDto {
     UserAccountResponseDto author;
     PostResponseDto postId;
     LocalDateTime createdAt;
+    LocalDateTime changedAt;
     boolean isAnonymous;
 }
