@@ -5,6 +5,8 @@ import com.example.demo.dto.request.UserGenderDto;
 import com.example.demo.dto.response.FileResponseDto;
 import com.example.demo.dto.response.UserAccountResponseDto;
 import com.example.demo.dto.response.UserResponseDto;
+import com.example.demo.entity.User;
+import com.example.demo.exceptions.handlers.ModeratorUserExist;
 import com.example.demo.exceptions.handlers.UserNotFoundError;
 import com.example.demo.mapper.FileDtoMapper;
 import com.example.demo.mapper.UserMapper;
@@ -58,11 +60,15 @@ public class UserController {
         userService.unbanUser(userId);
     }
 
-    @PostMapping("/give_moder/{userId}")
-    public void moderUser(@PathVariable @Valid Long userId) {
-        userService.setModer(userId);
+    @PostMapping("/give_moderator/{userId}")
+    public void giveModerator(@PathVariable @Valid Long userId) throws ModeratorUserExist {
+        userService.giveModerator(userId);
     }
 
+    @PostMapping("/take_moderator/{userId}")
+    public void takeModerator(@PathVariable @Valid Long userId) throws ModeratorUserExist {
+        userService.takeModerator(userId);
+    }
     @PostMapping(value = "/photo/add", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public FileResponseDto saveFile(@RequestPart MultipartFile request, Long userId) throws IOException {
         var savedFile = fileService.savePhoto(request.getBytes(), userId);

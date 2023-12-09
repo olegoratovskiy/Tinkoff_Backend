@@ -5,7 +5,9 @@ import com.example.demo.dto.request.RegistrationUserDto;
 import com.example.demo.dto.request.UserChangeNameDto;
 import com.example.demo.dto.request.UserGenderDto;
 import com.example.demo.dto.response.UserAccountResponseDto;
+import com.example.demo.entity.Role;
 import com.example.demo.entity.User;
+import com.example.demo.exceptions.handlers.ModeratorUserExist;
 import com.example.demo.exceptions.handlers.UserNotFoundError;
 import com.example.demo.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -72,11 +75,26 @@ public class UserService implements UserDetailsService {
         userRepository.save(user);
     }
 
-    @Transactional
-    public void setModer(Long id) {
+    public void giveModerator(long id) throws ModeratorUserExist {
         var user = findById(id);
-        user.setRole("MODER");
-        user.setRoles(new ArrayList<>(List.of(roleService.getModerRole())));
+        if (Objects.equals("MODERATOR", user.getRole())) {
+            throw new ModeratorUserExist("This user is already moderator");
+        }
+        List<Role> moderatorRole = List.of(roleService.getModerRole());
+        user.getRoles().removeIf(role -> !moderatorRole.contains(role));
+        user.getRoles().addAll(moderatorRole);
+        user.setRole("MODERATOR");
+        userRepository.save(user);
+    }
+    public void takeModerator(long id) throws ModeratorUserExist {
+        var user = findById(id);
+        if (Objects.equals("USER", user.getRole())) {
+            throw new ModeratorUserExist("This user is already user");
+        }
+        List<Role> moderatorRole = List.of(roleService.getUserRole());
+        user.getRoles().removeIf(role -> !moderatorRole.contains(role));
+        user.getRoles().addAll(moderatorRole);
+        user.setRole("USER");
         userRepository.save(user);
     }
 
@@ -86,7 +104,7 @@ public class UserService implements UserDetailsService {
         user.setPassword(passwordEncoder.passwordEncoder().encode(registrationUserDto.getPassword()));
         user.setRoles(List.of(roleService.getUserRole()));
         user.setGender(registrationUserDto.getGender());
-        user.setRole("ADMIN");
+        user.setRole("USER");
         user.setEmail(registrationUserDto.getEmail());
         return userRepository.save(user);
 
