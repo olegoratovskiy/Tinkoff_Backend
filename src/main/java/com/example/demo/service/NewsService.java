@@ -1,7 +1,6 @@
 package com.example.demo.service;
 
 import com.example.demo.entity.News;
-import com.example.demo.entity.Post;
 import com.example.demo.mapper.NewsMapper;
 import com.example.demo.repository.NewsRepository;
 import com.example.demo.utils.JwtTokenUtils;

@@ -16,7 +16,7 @@ public class CommentDtoMapper {
 
     private final NewsMapper mapper;
 
-    public CommentDtoMapper(PostMapper postMapper, UserMapper userMapper,NewsMapper mapper) {
+    public CommentDtoMapper(PostMapper postMapper, UserMapper userMapper, NewsMapper mapper) {
         this.postMapper = postMapper;
         this.userMapper = userMapper;
         this.mapper = mapper;

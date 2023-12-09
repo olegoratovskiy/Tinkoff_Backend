@@ -33,6 +33,7 @@ public class CommentController {
 
         return mapper.entityToResponse(createdComment);
     }
+
     @Transactional
     @PostMapping("/create-for-news")
     public CommentResponseForNewsDto createCommentForNews(@RequestBody @Valid CreateCommentRequestDto request) {
@@ -73,7 +74,7 @@ public class CommentController {
 
 
     @GetMapping("/get/all/for-news")
-    public List<CommentResponseForNewsDto> getCommentsForNews(@RequestParam long newsId){
+    public List<CommentResponseForNewsDto> getCommentsForNews(@RequestParam long newsId) {
         return commentService.getAllCommentsFromNews(newsId).stream()
                 .map(mapper::entityToResponseNews)
                 .toList();

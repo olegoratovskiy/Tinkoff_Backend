@@ -84,7 +84,9 @@ public class WebSecurityConfig {
                         .requestMatchers("/users/give_moder/**").hasRole("ADMIN")
                         .requestMatchers("/news/create").hasRole("ADMIN")
                         .requestMatchers("/news/create").hasRole("MODER")
-                        .requestMatchers("/news/get/all").authenticated()
+                        .requestMatchers("/users/give_moderator/**").hasRole("ADMIN")
+                        .requestMatchers("/users/take_moderator/**").hasRole("ADMIN")
+                        .requestMatchers("news/**").authenticated()
                         .anyRequest().permitAll()
                 )
                 .formLogin(AbstractHttpConfigurer::disable

@@ -52,8 +52,8 @@ public class CommentService {
     }
 
     public Comment createCommentForNews(CreateCommentModel model, String token) {
-        var news = newsRepository.findById(model.getPostId()).orElseThrow
-                (RuntimeException::new);
+        var news = newsRepository.findById(model.getPostId()).orElseThrow(
+                RuntimeException::new);
 
         var comment = new Comment();
         comment.setContent(model.getContent());
@@ -67,7 +67,7 @@ public class CommentService {
         return commentRepository.save(comment);
     }
 
-    public List<Comment> getAllCommentsFromNews(long newsId){
+    public List<Comment> getAllCommentsFromNews(long newsId) {
         var news = newsRepository.findById(newsId).orElseThrow(RuntimeException::new);
         return news.getComments();
     }
