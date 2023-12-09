@@ -5,6 +5,7 @@ import com.example.demo.dto.request.UserGenderDto;
 import com.example.demo.dto.response.FileResponseDto;
 import com.example.demo.dto.response.UserAccountResponseDto;
 import com.example.demo.dto.response.UserResponseDto;
+import com.example.demo.entity.User;
 import com.example.demo.exceptions.handlers.ModeratorUserExist;
 import com.example.demo.exceptions.handlers.UserNotFoundError;
 import com.example.demo.mapper.FileDtoMapper;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -38,10 +40,15 @@ public class UserController {
 
     @GetMapping("/get/all")
     public List<UserResponseDto> getAllUser() {
-        return userService.getAllUsers()
-                .stream()
-                .map(userMapper::fromModelToDto)
-                .toList();
+        var userList = userService.getAllUsers();
+        List<UserResponseDto> userResponseDtos = new ArrayList<>();
+        for(User user: userList){
+            UserResponseDto userResponseDto;
+            userResponseDto = userMapper.fromModelToDto(user);
+            userResponseDto.setRole(user.getRole());
+            userResponseDtos.add(userResponseDto);
+        }
+        return userResponseDtos;
     }
 
     @GetMapping("/get")
