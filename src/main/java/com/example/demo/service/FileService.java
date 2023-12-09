@@ -5,6 +5,7 @@ import com.example.demo.entity.Post;
 import com.example.demo.entity.User;
 import com.example.demo.enums.FileType;
 import com.example.demo.repository.FileRepository;
+import com.example.demo.repository.NewsRepository;
 import com.example.demo.repository.PostRepository;
 import com.example.demo.repository.UserRepository;
 import org.springframework.stereotype.Service;
@@ -16,10 +17,15 @@ public class FileService {
     private final PostRepository postRepository;
     private final UserRepository userRepository;
 
-    public FileService(FileRepository fileRepository, PostRepository postRepository, UserRepository userRepository) {
+    private final NewsRepository newsRepository;
+
+    public FileService(FileRepository fileRepository, PostRepository postRepository,
+                       UserRepository userRepository,
+                       NewsRepository newsRepository) {
         this.fileRepository = fileRepository;
         this.postRepository = postRepository;
         this.userRepository = userRepository;
+        this.newsRepository = newsRepository;
     }
 
     private User getUserByIdOrThrow(long id) {
@@ -35,6 +41,17 @@ public class FileService {
         file.setContent(bytes);
         file.setFileType(FileType.PICTURE); // TODO: put true value
         file.setPostId(post);
+
+        return fileRepository.save(file);
+    }
+
+    public File saveFileForNews(byte[] bytes, long postId) {
+        var news = newsRepository.findById(postId).orElseThrow(RuntimeException::new);
+
+        File file = new File();
+        file.setContent(bytes);
+        file.setFileType(FileType.PICTURE); // TODO: put true value
+        file.setNews(news);
 
         return fileRepository.save(file);
     }

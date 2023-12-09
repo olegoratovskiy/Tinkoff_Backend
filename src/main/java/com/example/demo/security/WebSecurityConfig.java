@@ -68,8 +68,7 @@ public class WebSecurityConfig {
                 })
                 .authorizeHttpRequests(requests -> requests
                         .requestMatchers("/auth/register").permitAll()
-                        .requestMatchers("/unsecured").permitAll()
-                        .requestMatchers("/done/secured").authenticated()
+                        .requestMatchers("/auth/login").permitAll()
                         .requestMatchers("/year/**").authenticated()
                         .requestMatchers("/subjects/**").authenticated()
                         .requestMatchers("/works/**").authenticated()
@@ -83,6 +82,11 @@ public class WebSecurityConfig {
                         .requestMatchers("/posts/**").authenticated()
                         .requestMatchers("/comments/**").authenticated()
                         .requestMatchers("/users/give_moder/**").hasRole("ADMIN")
+                        .requestMatchers("/news/create").hasRole("ADMIN")
+                        .requestMatchers("/news/create").hasRole("MODER")
+                        .requestMatchers("/users/give_moderator/**").hasRole("ADMIN")
+                        .requestMatchers("/users/take_moderator/**").hasRole("ADMIN")
+                        .requestMatchers("news/**").authenticated()
                         .anyRequest().permitAll()
                 )
                 .formLogin(AbstractHttpConfigurer::disable

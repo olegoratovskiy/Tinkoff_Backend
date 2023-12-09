@@ -6,6 +6,7 @@ import com.example.demo.entity.User;
 import com.example.demo.entity.Work;
 import com.example.demo.model.CreateCommentModel;
 import com.example.demo.repository.CommentRepository;
+import com.example.demo.repository.NewsRepository;
 import com.example.demo.repository.PostRepository;
 
 import com.example.demo.utils.JwtTokenUtils;
@@ -47,6 +48,8 @@ class CommentServiceTest {
 
     @MockBean
     private CommentRepository commentRepository;
+    @MockBean
+    private NewsRepository newsRepository;
 
 
     @Test
@@ -89,7 +92,8 @@ class CommentServiceTest {
                 commentRepositoryMock,
                 postRepositoryMock,
                 userServiceMock,
-                jwtTokenUtilsMock);
+                jwtTokenUtilsMock,
+                newsRepository);
 
         Comment createdComment = commentService.createComment(mockModel, mockToken);
 

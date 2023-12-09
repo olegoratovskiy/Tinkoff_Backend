@@ -12,4 +12,5 @@ public class UserResponseDto {
     private boolean isBanned;
     private String gender;
     private String email;
+    private String role;
 }

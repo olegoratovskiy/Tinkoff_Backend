@@ -40,6 +40,12 @@ public class User {
     @EqualsAndHashCode.Exclude
     private List<Comment> comments;
 
+    @OneToMany(mappedBy = "userId", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE},
+            fetch = FetchType.LAZY)
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    private List<News> news;
+
     @ManyToMany
     @JoinTable(
             name = "user_roles",

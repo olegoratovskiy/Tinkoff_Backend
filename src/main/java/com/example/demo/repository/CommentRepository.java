@@ -12,4 +12,6 @@ import java.time.LocalDateTime;
 public interface CommentRepository extends JpaRepository<Comment, Long> {
     Page<Comment> findAllByPostIdId(long postId, Pageable pageable);
     void deleteAllByCreatedAtBefore(LocalDateTime beforeLocalDateTime);
+
+    Page<Comment> findAllByNewsId(long news, Pageable pageable);
 }
