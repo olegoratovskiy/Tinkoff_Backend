@@ -32,6 +32,11 @@ public class NewsController {
                 .toList();
     }
 
+    @GetMapping("/get/{newsId}")
+    public NewsResponseDto getNews(@PathVariable @Valid Long newsId) {
+        return newsMapper.fromModelToDto(newsService.getNews(newsId));
+    }
+
     @PutMapping("/update")
     public NewsResponseDto updateNews(@RequestBody NewsRequestUpdateDto newsRequestDto) {
         var newNews = newsMapper.fromDtoUpdateToModel(newsRequestDto);

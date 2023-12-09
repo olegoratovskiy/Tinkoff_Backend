@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.entity.News;
+import com.example.demo.entity.Post;
 import com.example.demo.mapper.NewsMapper;
 import com.example.demo.repository.NewsRepository;
 import com.example.demo.utils.JwtTokenUtils;
@@ -43,5 +44,9 @@ public class NewsService {
     @Transactional
     public void delete(long id) {
         newsRepository.deleteById(id);
+    }
+
+    public News getNews(Long newsId) {
+        return newsRepository.findById(newsId).orElseThrow(RuntimeException::new);
     }
 }
