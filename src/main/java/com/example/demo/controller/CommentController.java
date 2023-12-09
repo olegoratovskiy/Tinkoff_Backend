@@ -1,9 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.dto.request.CreateCommentRequestDto;
-import com.example.demo.dto.response.CommentResponseDto;
-import com.example.demo.dto.response.CommentsResponseDto;
-import com.example.demo.dto.response.PageInfoResponse;
+import com.example.demo.dto.response.*;
 import com.example.demo.entity.Comment;
 import com.example.demo.mapper.CommentDtoMapper;
 import com.example.demo.service.CommentService;
@@ -35,6 +33,15 @@ public class CommentController {
 
         return mapper.entityToResponse(createdComment);
     }
+    @Transactional
+    @PostMapping("/create-for-news")
+    public CommentResponseForNewsDto createCommentForNews(@RequestBody @Valid CreateCommentRequestDto request) {
+        String token = request.getToken();
+        var createCommentModel = mapper.requestToEntity(request);
+        var createdComment = commentService.createComment(createCommentModel, token);
+
+        return mapper.entityToResponseNews(createdComment);
+    }
 
     @Transactional
     @GetMapping("/get/all")
@@ -60,6 +67,26 @@ public class CommentController {
         );
         return new CommentsResponseDto(
                 comments.getContent().stream().map(mapper::entityToResponse).toList(),
+                pageInfo
+        );
+    }
+
+    @Transactional
+    @GetMapping("/get-for-news")
+    public CommentsResponseDtoForNews getCommentsForNews(
+            @RequestParam long postId,
+            @RequestParam int pageNumber,
+            @RequestParam int pageSize
+    ) {
+        Page<Comment> comments = commentService.getCommentsForNews(postId, pageNumber, pageSize);
+        PageInfoResponse pageInfo = new PageInfoResponse(
+                comments.getTotalPages(),
+                comments.getTotalElements(),
+                comments.getNumber(),
+                comments.getNumberOfElements()
+        );
+        return new CommentsResponseDtoForNews(
+                comments.getContent().stream().map(mapper::entityToResponseNews).toList(),
                 pageInfo
         );
     }

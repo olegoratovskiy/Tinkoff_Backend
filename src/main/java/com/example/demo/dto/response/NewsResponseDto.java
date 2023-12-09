@@ -12,5 +12,5 @@ public class NewsResponseDto {
     private String title;
     private String description;
     private List<FileResponseDto> files;
-    private UserResponseDto userId;
+    private UserAccountResponseDto userId;
 }

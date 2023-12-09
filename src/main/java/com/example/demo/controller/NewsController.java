@@ -41,7 +41,7 @@ public class NewsController {
     public NewsResponseDto updateNews(@RequestBody NewsRequestUpdateDto newsRequestDto) {
         var newNews = newsMapper.fromDtoUpdateToModel(newsRequestDto);
         return newsMapper.fromModelToDto(newsService
-                .update(newNews, newNews.getId(),newsRequestDto.getToken()));
+                .update(newNews, newNews.getId(), newsRequestDto.getToken()));
 
     }
 
