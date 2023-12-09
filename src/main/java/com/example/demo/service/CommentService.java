@@ -67,6 +67,11 @@ public class CommentService {
         return commentRepository.save(comment);
     }
 
+    public List<Comment> getAllCommentsFromNews(long newsId){
+        var news = newsRepository.findById(newsId).orElseThrow(RuntimeException::new);
+        return news.getComments();
+    }
+
     public Page<Comment> getComments(long postId, int pageNumber, int pageSize) {
         return commentRepository.findAllByPostIdId(
                 postId,

@@ -38,7 +38,7 @@ public class CommentController {
     public CommentResponseForNewsDto createCommentForNews(@RequestBody @Valid CreateCommentRequestDto request) {
         String token = request.getToken();
         var createCommentModel = mapper.requestToEntity(request);
-        var createdComment = commentService.createComment(createCommentModel, token);
+        var createdComment = commentService.createCommentForNews(createCommentModel, token);
 
         return mapper.entityToResponseNews(createdComment);
     }
@@ -69,6 +69,14 @@ public class CommentController {
                 comments.getContent().stream().map(mapper::entityToResponse).toList(),
                 pageInfo
         );
+    }
+
+
+    @GetMapping("/get/all/for-news")
+    public List<CommentResponseForNewsDto> getCommentsForNews(@RequestParam long newsId){
+        return commentService.getAllCommentsFromNews(newsId).stream()
+                .map(mapper::entityToResponseNews)
+                .toList();
     }
 
     @Transactional
