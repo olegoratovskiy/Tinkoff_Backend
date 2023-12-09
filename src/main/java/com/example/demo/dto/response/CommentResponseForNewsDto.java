@@ -16,4 +16,5 @@ public class CommentResponseForNewsDto {
     NewsResponseDto news;
     LocalDateTime createdAt;
     boolean isAnonymous;
+    Long baseCommentId;
 }
