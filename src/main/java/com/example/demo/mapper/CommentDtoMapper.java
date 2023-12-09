@@ -1,10 +1,12 @@
 package com.example.demo.mapper;
 
+import com.example.demo.dto.request.CreateCommentForNewsRequestDto;
 import com.example.demo.dto.request.CreateCommentRequestDto;
 import com.example.demo.dto.request.UpdateCommentRequestDto;
 import com.example.demo.dto.response.CommentResponseDto;
 import com.example.demo.dto.response.CommentResponseForNewsDto;
 import com.example.demo.entity.Comment;
+import com.example.demo.model.CreateCommentForNewsModel;
 import com.example.demo.model.CreateCommentModel;
 import com.example.demo.model.UpdateCommentModel;
 import org.springframework.stereotype.Component;
@@ -30,6 +32,16 @@ public class CommentDtoMapper {
                 request.getPostId(),
                 LocalDateTime.now(),
                 request.isAnonymous()
+        );
+    }
+
+    public CreateCommentForNewsModel requestToEntity(CreateCommentForNewsRequestDto request) {
+        return new CreateCommentForNewsModel(
+                request.getContent(),
+                request.getPostId(),
+                LocalDateTime.now(),
+                request.isAnonymous(),
+                request.getParentCommentId()
         );
     }
 
@@ -61,7 +73,8 @@ public class CommentDtoMapper {
                 userMapper.fromModelToAccountDto(entity.getAuthor()),
                 mapper.fromModelToDto(entity.getNews()),
                 entity.getCreatedAt(),
-                entity.isAnonymous()
+                entity.isAnonymous(),
+                entity.getParentCommentId()
         );
     }
 }

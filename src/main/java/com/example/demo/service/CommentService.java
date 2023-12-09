@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import com.example.demo.entity.Comment;
 import com.example.demo.entity.Post;
+import com.example.demo.model.CreateCommentForNewsModel;
 import com.example.demo.model.CreateCommentModel;
 import com.example.demo.model.UpdateCommentModel;
 import com.example.demo.repository.CommentRepository;
@@ -72,19 +73,28 @@ public class CommentService {
         return commentRepository.save(commentEntity);
     }
 
-    public Comment createCommentForNews(CreateCommentModel model, String token) {
-        var news = newsRepository.findById(model.getPostId()).orElseThrow(
-                RuntimeException::new);
+    public Comment createCommentForNews(CreateCommentForNewsModel model, String token) {
+        var createdCommentForNewsUser = userService.findByUserName(jwtTokenUtils.getUsername(token))
+                .orElseThrow(() -> new IllegalArgumentException("No user with jwt token: " + token));
+
+        var parentCommentId = model.getParentCommentId();
+        var parentComment = commentRepository.findById(parentCommentId)
+                .orElseThrow(() -> new IllegalArgumentException("No comment with id: " + parentCommentId));
+        if (parentComment.getParentCommentId() != null) {
+            throw new IllegalArgumentException("Can't create reply on reply");
+        }
+
+        var news = newsRepository.findById(model.getPostId())
+                .orElseThrow(RuntimeException::new);
 
         var comment = new Comment();
         comment.setContent(model.getContent());
         comment.setNews(news);
         comment.setCreatedAt(model.getCreatedAt());
-
-        comment.setAuthor(userService.findByUserName(
-                        jwtTokenUtils.getUsername(token))
-                .orElseThrow(RuntimeException::new));
+        comment.setParentCommentId(model.getParentCommentId());
+        comment.setAuthor(createdCommentForNewsUser);
         comment.setAnonymous(model.isAnonymous());
+
         return commentRepository.save(comment);
     }
 
@@ -103,6 +113,13 @@ public class CommentService {
     public Page<Comment> getCommentsForNews(long postId, int pageNumber, int pageSize) {
         return commentRepository.findAllByNewsId(
                 postId,
+                PageRequest.of(pageNumber, pageSize, Sort.by(Sort.Order.asc("id")))
+        );
+    }
+
+    public Page<Comment> getRepliedCommentsForNews(long commentId, int pageNumber, int pageSize) {
+        return commentRepository.findAllByParentCommentId(
+                commentId,
                 PageRequest.of(pageNumber, pageSize, Sort.by(Sort.Order.asc("id")))
         );
     }

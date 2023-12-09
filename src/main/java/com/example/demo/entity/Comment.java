@@ -35,5 +35,7 @@ public class Comment {
     private LocalDateTime changedAt;
     @Column(name = "is_anonymous")
     private boolean isAnonymous;
+    @Column(name = "parent_comment_id")
+    private Long parentCommentId;
 
 }

@@ -26,6 +26,7 @@
             <column name="created_at" type="varchar(255)" defaultValue="null"/>
             <column name="changed_at" type="varchar(255)" defaultValue="null"/>
             <column name="is_anonymous" type="boolean"/>
+            <column name="parent_comment_id" type="bigint" defaultValue="null"/>
         </createTable>
     </changeSet>
 </databaseChangeLog>
