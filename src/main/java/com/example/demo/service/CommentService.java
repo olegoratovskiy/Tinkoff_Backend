@@ -3,6 +3,7 @@ package com.example.demo.service;
 import com.example.demo.entity.Comment;
 import com.example.demo.entity.Post;
 import com.example.demo.model.CreateCommentModel;
+import com.example.demo.model.UpdateCommentModel;
 import com.example.demo.repository.CommentRepository;
 import com.example.demo.repository.NewsRepository;
 import com.example.demo.repository.PostRepository;
@@ -44,11 +45,31 @@ public class CommentService {
         comment.setPostId(post);
         comment.setCreatedAt(model.getCreatedAt());
 
-        comment.setAuthor(userService.findByUserName(
-                        jwtTokenUtils.getUsername(token))
-                .orElseThrow(RuntimeException::new));
+        comment.setAuthor(
+                userService.findByUserName(jwtTokenUtils.getUsername(token))
+                        .orElseThrow(RuntimeException::new)
+        );
         comment.setAnonymous(model.isAnonymous());
         return commentRepository.save(comment);
+    }
+
+    public Comment updateComment(UpdateCommentModel updateCommentModel) {
+        var commentId = updateCommentModel.getCommentId();
+        var commentEntity = commentRepository.findById(commentId)
+                .orElseThrow(() -> new IllegalArgumentException("No comment with id: " + commentId));
+
+        var jwtToken = updateCommentModel.getToken();
+        var updatedCommentUser = userService.findByUserName(jwtTokenUtils.getUsername(updateCommentModel.getToken()))
+                .orElseThrow(() -> new IllegalArgumentException("No user with jwt token: " + jwtToken));
+
+        if (!updatedCommentUser.getComments().contains(commentEntity)) {
+            String message = "User with jwt token={} can't change comment with id={}";
+            throw new IllegalArgumentException(String.format(message, jwtToken, commentId));
+        }
+
+        commentEntity.setContent(updateCommentModel.getContent());
+        commentEntity.setChangedAt(updateCommentModel.getChangedAt());
+        return commentRepository.save(commentEntity);
     }
 
     public Comment createCommentForNews(CreateCommentModel model, String token) {
