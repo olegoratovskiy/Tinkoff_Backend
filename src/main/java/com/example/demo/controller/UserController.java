@@ -42,7 +42,7 @@ public class UserController {
     public List<UserResponseDto> getAllUser() {
         var userList = userService.getAllUsers();
         List<UserResponseDto> userResponseDtos = new ArrayList<>();
-        for(User user: userList){
+        for (User user : userList) {
             UserResponseDto userResponseDto;
             userResponseDto = userMapper.fromModelToDto(user);
             userResponseDto.setRole(user.getRole());
@@ -75,6 +75,7 @@ public class UserController {
     public void takeModerator(@PathVariable @Valid Long userId) throws ModeratorUserExist {
         userService.takeModerator(userId);
     }
+
     @PostMapping(value = "/photo/add", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public FileResponseDto saveFile(@RequestPart MultipartFile request, Long userId) throws IOException {
         var savedFile = fileService.savePhoto(request.getBytes(), userId);

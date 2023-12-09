@@ -49,7 +49,6 @@ class CommentServiceTest {
     @MockBean
     private CommentRepository commentRepository;
     @MockBean
-
     private NewsRepository newsRepository;
 
 

@@ -20,8 +20,12 @@ public class NewsController {
 
     @PostMapping("/create")
     public NewsResponseDto createNews(@RequestBody NewsRequestDto newsRequestDto) {
-        return newsMapper.fromModelToDto(newsService.createNews(newsMapper.
-                fromDtoToModel(newsRequestDto), newsRequestDto.getToken()));
+        return newsMapper
+                .fromModelToDto(newsService
+                .createNews(newsMapper
+                .fromDtoToModel(newsRequestDto),
+                        newsRequestDto
+                .getToken()));
     }
 
     @GetMapping("/get/all")
