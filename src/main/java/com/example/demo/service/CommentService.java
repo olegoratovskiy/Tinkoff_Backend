@@ -59,14 +59,14 @@ public class CommentService {
         var commentEntity = commentRepository.findById(commentId)
                 .orElseThrow(() -> new IllegalArgumentException("No comment with id: " + commentId));
 
-        var jwtToken = updateCommentModel.getToken();
-        var updatedCommentUser = userService.findByUserName(jwtTokenUtils.getUsername(updateCommentModel.getToken()))
-                .orElseThrow(() -> new IllegalArgumentException("No user with jwt token: " + jwtToken));
-
-        if (!updatedCommentUser.getComments().contains(commentEntity)) {
-            String message = "User with jwt token={} can't change comment with id={}";
-            throw new IllegalArgumentException(String.format(message, jwtToken, commentId));
-        }
+//        var jwtToken = updateCommentModel.getToken();
+//        var updatedCommentUser = userService.findByUserName(jwtTokenUtils.getUsername(updateCommentModel.getToken()))
+//                .orElseThrow(() -> new IllegalArgumentException("No user with jwt token: " + jwtToken));
+//
+//        if (!updatedCommentUser.getComments().contains(commentEntity)) {
+//            String message = "User with jwt token={} can't change comment with id={}";
+//            throw new IllegalArgumentException(String.format(message, jwtToken, commentId));
+//        }
 
         commentEntity.setContent(updateCommentModel.getContent());
         commentEntity.setChangedAt(updateCommentModel.getChangedAt());
@@ -77,11 +77,13 @@ public class CommentService {
         var createdCommentForNewsUser = userService.findByUserName(jwtTokenUtils.getUsername(token))
                 .orElseThrow(() -> new IllegalArgumentException("No user with jwt token: " + token));
 
-        var parentCommentId = model.getParentCommentId();
-        var parentComment = commentRepository.findById(parentCommentId)
-                .orElseThrow(() -> new IllegalArgumentException("No comment with id: " + parentCommentId));
-        if (parentComment.getParentCommentId() != null) {
-            throw new IllegalArgumentException("Can't create reply on reply");
+        if (model.getParentCommentId() != null) {
+            var parentCommentId = model.getParentCommentId();
+            var parentComment = commentRepository.findById(parentCommentId)
+                    .orElseThrow(() -> new IllegalArgumentException("No comment with id: " + parentCommentId));
+            if (parentComment.getParentCommentId() != null) {
+                throw new IllegalArgumentException("Can't create reply on reply");
+            }
         }
 
         var news = newsRepository.findById(model.getPostId())
@@ -116,6 +118,13 @@ public class CommentService {
                 PageRequest.of(pageNumber, pageSize, Sort.by(Sort.Order.asc("id")))
         );
     }
+
+//    public List<Comment> getCommentsHistory(long commentId) {
+//        return List.of();
+//        return commentRepository.findAllById(commentId);
+//        return commentRepository.findById(commentId)
+//                .orElseThrow(() -> new IllegalArgumentException());
+//    }
 
     public Page<Comment> getRepliedCommentsForNews(long commentId, int pageNumber, int pageSize) {
         return commentRepository.findAllByParentCommentId(

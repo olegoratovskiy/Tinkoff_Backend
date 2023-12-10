@@ -1,5 +1,6 @@
 package com.example.demo.model;
 
+import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,5 +16,6 @@ public class CreateCommentForNewsModel {
     @NotNull
     LocalDateTime createdAt;
     boolean isAnonymous;
+    @Nullable
     Long parentCommentId;
 }
