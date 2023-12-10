@@ -81,15 +81,6 @@ public class CommentController {
         );
     }
 
-//    @Transactional
-//    @GetMapping("/history/{commentId}")
-//    public List<CommentResponseDto> getCommentsHistory(@PathVariable long commentId) {
-//        return commentService.getCommentsHistory(commentId).stream()
-//                .map(mapper::entityToResponse)
-//                .toList();
-//    }
-
-
     @GetMapping("/get/all/for-news")
     public List<CommentResponseForNewsDto> getCommentsForNews(@RequestParam long newsId) {
         return commentService.getAllCommentsFromNews(newsId).stream()
