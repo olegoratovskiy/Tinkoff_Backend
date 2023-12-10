@@ -81,7 +81,6 @@ public class CommentController {
         );
     }
 
-
     @GetMapping("/get/all/for-news")
     public List<CommentResponseForNewsDto> getCommentsForNews(@RequestParam long newsId) {
         return commentService.getAllCommentsFromNews(newsId).stream()

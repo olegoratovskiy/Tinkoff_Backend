@@ -3,12 +3,16 @@ package com.example.demo.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.envers.Audited;
 
 import java.time.LocalDateTime;
+
+import static org.hibernate.envers.RelationTargetAuditMode.NOT_AUDITED;
 
 @Getter
 @Setter
 @Entity
+@Audited(targetAuditMode = NOT_AUDITED)
 @Table(name = "comment_jn")
 public class Comment {
     @Id

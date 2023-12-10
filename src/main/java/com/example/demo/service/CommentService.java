@@ -77,11 +77,13 @@ public class CommentService {
         var createdCommentForNewsUser = userService.findByUserName(jwtTokenUtils.getUsername(token))
                 .orElseThrow(() -> new IllegalArgumentException("No user with jwt token: " + token));
 
-        var parentCommentId = model.getParentCommentId();
-        var parentComment = commentRepository.findById(parentCommentId)
-                .orElseThrow(() -> new IllegalArgumentException("No comment with id: " + parentCommentId));
-        if (parentComment.getParentCommentId() != null) {
-            throw new IllegalArgumentException("Can't create reply on reply");
+        if (model.getParentCommentId() != null) {
+            var parentCommentId = model.getParentCommentId();
+            var parentComment = commentRepository.findById(parentCommentId)
+                    .orElseThrow(() -> new IllegalArgumentException("No comment with id: " + parentCommentId));
+            if (parentComment.getParentCommentId() != null) {
+                throw new IllegalArgumentException("Can't create reply on reply");
+            }
         }
 
         var news = newsRepository.findById(model.getPostId())
