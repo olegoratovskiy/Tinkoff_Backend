@@ -37,7 +37,7 @@ public class CommentController {
         return mapper.entityToResponse(createdComment);
     }
 
-    @PostMapping("/update")
+    @PutMapping("/update")
     public CommentResponseDto updateComment(@RequestBody @Valid UpdateCommentRequestDto request) {
         var updateCommentModel = mapper.requestToModel(request);
         var updatedComment = commentService.updateComment(updateCommentModel);

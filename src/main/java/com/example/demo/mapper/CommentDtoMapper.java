@@ -74,6 +74,7 @@ public class CommentDtoMapper {
                 userMapper.fromModelToAccountDto(entity.getAuthor()),
                 mapper.fromModelToDto(entity.getNews()),
                 entity.getCreatedAt(),
+                entity.getChangedAt(),
                 entity.isAnonymous(),
                 entity.getParentCommentId(),
                 null
