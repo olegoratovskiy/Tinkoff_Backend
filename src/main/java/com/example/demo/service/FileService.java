@@ -8,6 +8,7 @@ import com.example.demo.repository.FileRepository;
 import com.example.demo.repository.NewsRepository;
 import com.example.demo.repository.PostRepository;
 import com.example.demo.repository.UserRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -44,7 +45,7 @@ public class FileService {
 
         return fileRepository.save(file);
     }
-
+    @Transactional
     public File saveFileForNews(byte[] bytes, long postId) {
         var news = newsRepository.findById(postId).orElseThrow(RuntimeException::new);
 
