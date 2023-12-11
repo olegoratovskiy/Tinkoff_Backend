@@ -15,4 +15,5 @@ public class CommentResponseDto {
     LocalDateTime createdAt;
     LocalDateTime changedAt;
     boolean isAnonymous;
+    Long baseCommentId;
 }

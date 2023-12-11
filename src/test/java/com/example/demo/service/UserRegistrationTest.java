@@ -37,11 +37,11 @@ public class UserRegistrationTest {
     @Autowired
     private UserService userService;
 
-    @BeforeEach
-    @AfterEach
-    public void clear() {
-        userRepository.deleteAll();
-    }
+//    @BeforeEach
+//    @AfterEach
+//    public void clear() {
+//        userRepository.deleteAll();
+//    }
 
     @Test
     public void createUserNotRegister() {

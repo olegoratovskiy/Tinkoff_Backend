@@ -62,7 +62,8 @@ public class CommentDtoMapper {
                 postMapper.fromModelToDto(entity.getPostId()),
                 entity.getCreatedAt(),
                 entity.getChangedAt(),
-                entity.isAnonymous()
+                entity.isAnonymous(),
+                entity.getParentCommentId()
         );
     }
 
