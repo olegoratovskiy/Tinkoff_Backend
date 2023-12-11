@@ -82,6 +82,7 @@ public class CommentController {
         );
     }
 
+    @Transactional
     @GetMapping("/get/all/for-news")
     public List<CommentResponseForNewsDto> getCommentsForNews(@RequestParam long newsId) {
         var commentList =  commentService.getAllCommentsFromNews(newsId).stream()
