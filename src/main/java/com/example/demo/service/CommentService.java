@@ -119,10 +119,16 @@ public class CommentService {
         );
     }
 
-    public Page<Comment> getRepliedCommentsForNews(long commentId, int pageNumber, int pageSize) {
+//    public Page<Comment> getRepliedCommentsForNews(long commentId, int pageNumber, int pageSize) {
+//        return commentRepository.findAllByParentCommentId(
+//                commentId,
+//                PageRequest.of(pageNumber, pageSize, Sort.by(Sort.Order.asc("id")))
+//        );
+//    }
+
+    public List<Comment> getRepliedCommentsForNews(long commentId) {
         return commentRepository.findAllByParentCommentId(
-                commentId,
-                PageRequest.of(pageNumber, pageSize, Sort.by(Sort.Order.asc("id")))
+                commentId
         );
     }
 
