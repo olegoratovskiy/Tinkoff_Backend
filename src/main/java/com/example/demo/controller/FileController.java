@@ -29,7 +29,7 @@ public class FileController {
 
     @PostMapping(value = "/save-for-news", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public FileResponseDto saveFileForNews(@RequestPart MultipartFile request, long postId) throws IOException {
-        var savedFile = fileService.saveFile(request.getBytes(), postId);
+        var savedFile = fileService.saveFileForNews(request.getBytes(), postId);
         return mapper.entityToResponse(savedFile);
     }
 
