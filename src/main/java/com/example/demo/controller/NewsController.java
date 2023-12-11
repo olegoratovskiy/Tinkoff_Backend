@@ -29,6 +29,7 @@ public class NewsController {
                 .getToken()));
     }
 
+    @Transactional
     @GetMapping("/get/all")
     public List<NewsResponseDto> getAllNews() {
         return newsService.getAll()
