@@ -103,7 +103,7 @@ public class UserService implements UserDetailsService {
         user.setPassword(passwordEncoder.passwordEncoder().encode(registrationUserDto.getPassword()));
         user.setRoles(List.of(roleService.getUserRole()));
         user.setGender(registrationUserDto.getGender());
-        user.setRole("ADMIN");
+        user.setRole("USER");
         user.setEmail(registrationUserDto.getEmail());
         return userRepository.save(user);
 

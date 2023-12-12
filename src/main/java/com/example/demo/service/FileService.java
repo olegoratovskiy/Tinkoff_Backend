@@ -53,7 +53,7 @@ public class FileService {
         file.setContent(bytes);
         file.setFileType(FileType.PICTURE); // TODO: put true value
         file.setNews(news);
-
+        file.setPostId(null);
         return fileRepository.save(file);
     }
 
