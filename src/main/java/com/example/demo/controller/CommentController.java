@@ -85,13 +85,13 @@ public class CommentController {
     @Transactional
     @GetMapping("/get/all/for-news")
     public List<CommentResponseForNewsDto> getCommentsForNews(@RequestParam long newsId) {
-        var commentList =  commentService.getAllCommentsFromNews(newsId).stream()
+        var commentList = commentService.getAllCommentsFromNews(newsId).stream()
                 .map(mapper::entityToResponseNews)
                 .toList();
-        for(CommentResponseForNewsDto commentResponseForNewsDto : commentList){
+        for (CommentResponseForNewsDto commentResponseForNewsDto : commentList) {
             var comment = commentService.getRepliedCommentsForNews(commentResponseForNewsDto.getId());
             var list = new ArrayList<CommentResponseDto>();
-            for(Comment comment1 : comment){
+            for (Comment comment1 : comment) {
                 list.add(mapper.entityToResponse(comment1));
             }
             commentResponseForNewsDto.setChildren(list);
