@@ -26,13 +26,13 @@ public class News {
     @JoinColumn(name = "user_id")
     private User userId;
 
-    @OneToMany(mappedBy = "news", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE},
+    @OneToMany(mappedBy = "news", cascade = CascadeType.ALL,
             fetch = FetchType.LAZY)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private List<Comment> comments;
 
-    @OneToMany(mappedBy = "news", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE},
+    @OneToMany(mappedBy = "news", cascade = CascadeType.ALL,
             fetch = FetchType.LAZY)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude

@@ -62,7 +62,8 @@ public class CommentDtoMapper {
                 postMapper.fromModelToDto(entity.getPostId()),
                 entity.getCreatedAt(),
                 entity.getChangedAt(),
-                entity.isAnonymous()
+                entity.isAnonymous(),
+                entity.getParentCommentId()
         );
     }
 
@@ -73,8 +74,10 @@ public class CommentDtoMapper {
                 userMapper.fromModelToAccountDto(entity.getAuthor()),
                 mapper.fromModelToDto(entity.getNews()),
                 entity.getCreatedAt(),
+                entity.getChangedAt(),
                 entity.isAnonymous(),
-                entity.getParentCommentId()
+                entity.getParentCommentId(),
+                null
         );
     }
 }

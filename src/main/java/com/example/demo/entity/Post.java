@@ -36,7 +36,7 @@ public class Post {
     @EqualsAndHashCode.Exclude
     private List<Comment> comments;
 
-    @OneToMany(mappedBy = "postId", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE},
+    @OneToMany(mappedBy = "postId", cascade = CascadeType.ALL,
             fetch = FetchType.LAZY)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude

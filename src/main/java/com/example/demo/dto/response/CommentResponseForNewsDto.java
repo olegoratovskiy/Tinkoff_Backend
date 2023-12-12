@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -15,6 +16,9 @@ public class CommentResponseForNewsDto {
     UserAccountResponseDto author;
     NewsResponseDto news;
     LocalDateTime createdAt;
+    LocalDateTime changedAt;
     boolean isAnonymous;
     Long baseCommentId;
+    List<CommentResponseDto> children;
+
 }

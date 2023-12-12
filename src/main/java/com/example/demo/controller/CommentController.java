@@ -12,6 +12,7 @@ import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @CrossOrigin(origins = "*")
@@ -36,7 +37,7 @@ public class CommentController {
         return mapper.entityToResponse(createdComment);
     }
 
-    @PostMapping("/update")
+    @PutMapping("/update")
     public CommentResponseDto updateComment(@RequestBody @Valid UpdateCommentRequestDto request) {
         var updateCommentModel = mapper.requestToModel(request);
         var updatedComment = commentService.updateComment(updateCommentModel);
@@ -81,11 +82,21 @@ public class CommentController {
         );
     }
 
+    @Transactional
     @GetMapping("/get/all/for-news")
     public List<CommentResponseForNewsDto> getCommentsForNews(@RequestParam long newsId) {
-        return commentService.getAllCommentsFromNews(newsId).stream()
+        var commentList = commentService.getAllCommentsFromNews(newsId).stream()
                 .map(mapper::entityToResponseNews)
                 .toList();
+        for (CommentResponseForNewsDto commentResponseForNewsDto : commentList) {
+            var comment = commentService.getRepliedCommentsForNews(commentResponseForNewsDto.getId());
+            var list = new ArrayList<CommentResponseDto>();
+            for (Comment comment1 : comment) {
+                list.add(mapper.entityToResponse(comment1));
+            }
+            commentResponseForNewsDto.setChildren(list);
+        }
+        return commentList;
     }
 
     @Transactional
@@ -108,25 +119,25 @@ public class CommentController {
         );
     }
 
-    @Transactional
-    @GetMapping
-    public CommentsResponseDtoForNews getRepliedCommentsForNews(
-            @RequestParam long commentId,
-            @RequestParam int pageNumber,
-            @RequestParam int pageSize
-    ) {
-        Page<Comment> comments = commentService.getRepliedCommentsForNews(commentId, pageNumber, pageSize);
-        PageInfoResponse pageInfo = new PageInfoResponse(
-                comments.getTotalPages(),
-                comments.getTotalElements(),
-                comments.getNumber(),
-                comments.getNumberOfElements()
-        );
-        return new CommentsResponseDtoForNews(
-                comments.getContent().stream().map(mapper::entityToResponseNews).toList(),
-                pageInfo
-        );
-    }
+//    @Transactional
+//    @GetMapping
+//    public CommentsResponseDtoForNews getRepliedCommentsForNews(
+//            @RequestParam long commentId,
+//            @RequestParam int pageNumber,
+//            @RequestParam int pageSize
+//    ) {
+//        Page<Comment> comments = commentService.getRepliedCommentsForNews(commentId, pageNumber, pageSize);
+//        PageInfoResponse pageInfo = new PageInfoResponse(
+//                comments.getTotalPages(),
+//                comments.getTotalElements(),
+//                comments.getNumber(),
+//                comments.getNumberOfElements()
+//        );
+//        return new CommentsResponseDtoForNews(
+//                comments.getContent().stream().map(mapper::entityToResponseNews).toList(),
+//                pageInfo
+//        );
+//    }
 
     @DeleteMapping("/delete/{id}")
     public void deleteComment(@PathVariable @Valid Long id) {
